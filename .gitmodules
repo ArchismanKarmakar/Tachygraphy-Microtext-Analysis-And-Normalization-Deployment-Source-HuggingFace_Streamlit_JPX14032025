@@ -1,3 +1,3 @@
-[submodule "Training_Source_Main"]
-	path = Training_Source_Main
+[submodule "main"]
+	path = main
 	url = https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization.git
