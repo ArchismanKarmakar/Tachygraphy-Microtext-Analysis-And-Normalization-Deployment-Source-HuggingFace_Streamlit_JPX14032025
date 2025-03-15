@@ -285,7 +285,7 @@ ipykernel==5.5.6
 ipyleaflet==0.19.2
 ipympl==0.9.6
 ipyparallel==8.8.0
-ipython==7.34.0
+ipython==8.10.0
 ipython-genutils==0.2.0
 ipython-sql==0.5.0
 ipytree==0.2.2
@@ -302,7 +302,7 @@ jedi==0.19.2
 jeepney==0.7.1
 jellyfish==1.1.0
 jieba==0.42.1
-Jinja2==3.1.4
+Jinja2==3.1.6
 jiter==0.8.2
 jmespath==1.0.1
 joblib==1.4.2
@@ -315,7 +315,7 @@ jsonschema-specifications==2024.10.1
 jupyter-console==6.1.0
 jupyter-events==0.12.0
 jupyter-leaflet==0.19.2
-jupyter-lsp==1.5.1
+jupyter-lsp==2.2.2
 jupyter-ydoc==0.2.5
 jupyter_client==8.6.3
 jupyter_core==5.7.2
@@ -331,7 +331,7 @@ jupyterlab_widgets==3.0.13
 kaggle==1.6.17
 kaggle-environments==1.16.11
 kagglehub==0.3.9
-keras==3.5.0
+keras==3.9.0
 keras-core==0.1.7
 keras-cv==0.9.0
 keras-hub==0.18.1
@@ -419,7 +419,7 @@ narwhals==1.18.4
 natsort==8.4.0
 nbclassic==1.1.0
 nbclient==0.5.13
-nbconvert==6.4.5
+nbconvert==6.5.1
 nbdev==2.3.34
 nbformat==5.10.4
 ndindex==1.9.2
@@ -428,7 +428,7 @@ networkx==3.4.2
 nibabel==5.3.2
 nilearn==0.10.4
 ninja==1.11.1.3
-nltk==3.2.4
+nltk==3.9.1
 nose==1.3.7
 notebook==6.5.4
 notebook_shim==0.2.4
@@ -618,7 +618,7 @@ QtPy==2.4.3
 raft-dask-cu12==25.2.0
 rapids-dask-dependency==25.2.0
 ratelim==0.1.6
-ray==2.42.1
+ray==2.43.0
 referencing==0.35.1
 regex==2024.11.6
 requests==2.32.3
@@ -642,7 +642,7 @@ s3transfer==0.11.2
 sacrebleu==2.5.1
 safetensors==0.4.5
 scikit-image==0.25.0
-scikit-learn==1.2.2
+scikit-learn==1.5.1
 scikit-learn-intelex==2025.2.0
 scikit-multilearn==0.2.0
 scikit-optimize==0.10.2
@@ -753,12 +753,12 @@ torchmetrics==1.6.1
 torchsummary==1.5.1
 torchtune==0.5.0
 torchvision @ https://download.pytorch.org/whl/cu121/torchvision-0.20.1%2Bcu121-cp310-cp310-linux_x86_64.whl
-tornado==6.3.3
+tornado==6.4.2
 TPOT==0.12.1
 tqdm==4.67.1
 traitlets==5.7.1
 traittypes==0.2.1
-transformers==4.47.0
+transformers==4.48.0
 treelite==4.4.1
 trx-python==0.3
 tsfresh==0.20.2
