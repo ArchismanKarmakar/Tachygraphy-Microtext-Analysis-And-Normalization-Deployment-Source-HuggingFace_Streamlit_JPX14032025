@@ -1,0 +1,16 @@
+{
+    "1": {
+        "name": "DeBERTa v3 Base for Sequence Classification",
+        "type": "hf_automodel_finetuned_dbt3",
+        "module_path": "hmv_cfg_base_stage1.model1",
+        "hf_location": "tachygraphy-microtrext-norm-org/DeBERTa-v3-seqClassfication-LV1-SentimentPolarities-Batch8",
+        "tokenizer_class": "DebertaV2Tokenizer",
+        "model_class": "DebertaV2ForSequenceClassification",
+        "problem_type": "regression",
+        "base_model": "microsoft/deberta-v3-base",
+        "num_labels": 3,
+        "device": "cpu",
+        "load_function": "load_model",
+        "predict_function": "predict"
+    }
+}
