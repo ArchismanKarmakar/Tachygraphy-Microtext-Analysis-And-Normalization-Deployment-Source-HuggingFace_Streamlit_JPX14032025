@@ -5,7 +5,7 @@ colorFrom: purple
 colorTo: gray
 sdk: streamlit
 sdk_version: 1.43.2
-app_file: app.py
+app_file: app_main_hf.py
 pinned: false
 short_description: This project focuses on the Tachygraphy Microtext Analysis
 ---
