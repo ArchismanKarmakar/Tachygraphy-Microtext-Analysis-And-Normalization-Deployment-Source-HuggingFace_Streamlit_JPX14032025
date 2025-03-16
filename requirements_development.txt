@@ -434,7 +434,7 @@ tenacity==9.0.0
 tensorboard==2.18.0
 tensorboard-data-server==0.7.2
 tensorboard-plugin-wit==1.8.1
-tensorflow==2.18.0
+tensorflow==2.18.1
 tensorflow-datasets==4.9.8
 tensorflow-directml-plugin==0.2.0.dev221020
 tensorflow-estimator==2.15.0
