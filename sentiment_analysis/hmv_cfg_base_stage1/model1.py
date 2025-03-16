@@ -14,7 +14,7 @@ MODEL_OPTIONS = {
         "hf_location": "tachygraphy-microtrext-norm-org/DeBERTa-v3-seqClassfication-LV1-SentimentPolarities-Batch8",
         "tokenizer_class": "DebertaV2Tokenizer",
         "model_class": "DebertaV2ForSequenceClassification",
-        "problem_type": "regression",
+        "problem_type": "multi_label_classification",
         "base_model": "microsoft/deberta-v3-base",
         "num_labels": 3,
         "device": "cpu",
