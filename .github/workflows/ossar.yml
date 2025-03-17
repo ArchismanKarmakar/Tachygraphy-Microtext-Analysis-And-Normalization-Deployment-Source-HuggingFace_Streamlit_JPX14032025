@@ -38,6 +38,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        clean: true
         fetch-depth: 1  # Fetch only the latest commit
 
     # Ensure a compatible version of dotnet is installed.
