@@ -1,6 +1,6 @@
 [project]
 name = "tachygraphy-microtext-analysis-and-normalization"
-version = "2025.03.17.post1"
+version = "2025.03.16.post3"
 description = ""
 authors = [
     { name = "Archisman Karmakar", email = "92569441+ArchismanKarmakar@users.noreply.github.com" },

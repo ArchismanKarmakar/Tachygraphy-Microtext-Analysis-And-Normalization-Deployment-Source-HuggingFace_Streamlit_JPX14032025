@@ -1,13 +1,30 @@
 import streamlit as st
 import os
+import asyncio
 import sys
+
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+else:
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
+
+
 import joblib
+import importlib
 import importlib.util
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
+from imports import *
+
+
+
+
 from dashboard import show_dashboard
-from sentiment_analysis.sentiment_analysis import show_sentiment_analysis
+from sentiment_analysis.sentiment_analysis_main import show_sentiment_analysis
 from emotion_analysis import show_emotion_analysis
 # from text_transformation import show_text_transformation
 
