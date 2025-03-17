@@ -34,10 +34,12 @@ def load_model():
     tokenizer_class = globals()[model_info["tokenizer_class"]]
     model_class = globals()[model_info["model_class"]]
     tokenizer = tokenizer_class.from_pretrained(hf_location)
+    print("Loading model 1")
     model = model_class.from_pretrained(hf_location,
                                         problem_type=model_info["problem_type"],
                                         num_labels=model_info["num_labels"]
                                         )
+    print("Model 1 loaded")
 
     return model, tokenizer
 
@@ -58,12 +60,14 @@ def predict(text, model, tokenizer, device, max_len=128):
 
     # probabilities = outputs.logits.cpu().numpy()
 
-    probabilities = torch.relu(outputs.logits)
-    probabilities = torch.clamp(torch.tensor(probabilities), min=0.00000, max=1.00000).cpu().numpy()
+    # probabilities = torch.relu(outputs.logits)
+    # probabilities = torch.clamp(torch.tensor(probabilities), min=0.00000, max=1.00000).cpu().numpy()
     # probabilities /= probabilities.sum()
     # probabilities = probabilities.cpu().numpy()
 
-    return probabilities
+    predictions = torch.sigmoid(outputs.logits).cpu().numpy()
+
+    return predictions
 
 
 if __name__ == "__main__":

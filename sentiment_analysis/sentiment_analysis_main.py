@@ -3,6 +3,11 @@ import importlib.util
 import os
 import sys
 import joblib
+import time
+# from transformers.utils import move_cache_to_trash 
+# from huggingface_hub import delete_cache
+from transformers.utils.hub import TRANSFORMERS_CACHE
+import shutil
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
@@ -13,10 +18,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_STAGE1 = os.path.join(BASE_DIR, "config", "stage1_models.json")
 LOADERS_STAGE1 = os.path.join(BASE_DIR, "hmv-cfg-base-stage1")
 
-# Load the model and tokenizer
-# model_name = "tachygraphy-microtrext-norm-org/DeBERTa-v3-seqClassfication-LV1-SentimentPolarities-Batch8"
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
-# model = AutoModel.from_pretrained(model_name)
 
 SENTIMENT_POLARITY_LABELS = [
     "negative", "neutral", "positive"
@@ -26,23 +27,19 @@ current_model = None
 current_tokenizer = None
 
 # Enabling Resource caching
-@st.cache_resource
 
+
+@st.cache_resource
 def load_model_config():
     with open(CONFIG_STAGE1, "r") as f:
         model_data = json.load(f)
 
-    model_options = {v["name"]: v for v in model_data.values()}  # Extract names for dropdown
+    # Extract names for dropdown
+    model_options = {v["name"]: v for v in model_data.values()}
     return model_data, model_options
 
+
 MODEL_DATA, MODEL_OPTIONS = load_model_config()
-
-
-
-# def load_model():
-#     model = DebertaV2ForSequenceClassification.from_pretrained(model_name)
-#     tokenizer = DebertaV2Tokenizer.from_pretrained(model_name)
-#     return model, tokenizer
 
 
 # ✅ Dynamically Import Model Functions
@@ -69,7 +66,7 @@ def free_memory():
 
     gc.collect()  # Force garbage collection for CPU memory
 
-    if torch.cuda.is_available():  
+    if torch.cuda.is_available():
         torch.cuda.empty_cache()  # Free GPU memory
         torch.cuda.ipc_collect()  # Clean up PyTorch GPU cache
 
@@ -80,9 +77,21 @@ def free_memory():
     except Exception as e:
         print(f"Memory cleanup error: {e}")
 
+    # Delete cached Hugging Face models
+    try:
+        cache_dir = TRANSFORMERS_CACHE
+        if os.path.exists(cache_dir):
+            shutil.rmtree(cache_dir)
+            print("Cache cleared!")
+    except Exception as e:
+        print(f"❌ Cache cleanup error: {e}")
+
+
 
 def load_selected_model(model_name):
     global current_model, current_tokenizer
+
+    st.cache_resource.clear()
 
     free_memory()
 
@@ -109,9 +118,162 @@ def load_selected_model(model_name):
         return None, None, None
 
     model, tokenizer = load_model_func()
-    
+
     current_model, current_tokenizer = model, tokenizer
     return model, tokenizer, predict_func
+
+
+# Function to increment progress dynamically
+def update_progress(progress_bar, start, end, delay=0.1):
+    for i in range(start, end + 1, 5):  # Increment in steps of 5%
+        progress_bar.progress(i)
+        time.sleep(delay)  # Simulate processing time
+        # st.experimental_rerun() # Refresh the page
+
+
+# Function to update session state when model changes
+def on_model_change():
+    st.session_state.model_changed = True  # Mark model as changed
+    
+
+# Function to update session state when text changes
+
+
+def on_text_change():
+    st.session_state.text_changed = True  # Mark text as changed
+
+
+# Initialize session state variables
+if "selected_model" not in st.session_state:
+    st.session_state.selected_model = list(MODEL_OPTIONS.keys())[
+        0]  # Default model
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""
+if "last_processed_input" not in st.session_state:
+    st.session_state.last_processed_input = ""
+if "model_changed" not in st.session_state:
+    st.session_state.model_changed = False
+if "text_changed" not in st.session_state:
+    st.session_state.text_changed = False
+if "processing" not in st.session_state:
+    st.session_state.processing = False
+
+
+def show_sentiment_analysis():
+    st.cache_resource.clear()
+    free_memory()
+
+    st.title("Stage 1: Sentiment Polarity Analysis")
+    st.write("This section handles sentiment analysis.")
+
+    # Model selection with change detection
+    selected_model = st.selectbox(
+        "Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model", on_change=on_model_change
+    )
+
+    # Text input with change detection
+    user_input = st.text_input(
+        "Enter text for sentiment analysis:", key="user_input", on_change=on_text_change
+    )
+    user_input_copy = user_input
+
+    # Only run inference if:
+    # 1. The text is NOT empty
+    # 2. The text has changed OR the model has changed
+    if user_input.strip() and (st.session_state.text_changed or st.session_state.model_changed):
+
+        # Reset session state flags
+        st.session_state.last_processed_input = user_input
+        st.session_state.model_changed = False
+        st.session_state.text_changed = False   # Store selected model
+
+        # ADD A DYNAMIC PROGRESS BAR
+        progress_bar = st.progress(0)
+        update_progress(progress_bar, 0, 10)
+        # status_text = st.empty()
+
+        # update_progress(0, 10)
+        # status_text.text("Loading model...")
+
+        # Make prediction
+
+        # model, tokenizer = load_model()
+        # model, tokenizer = load_selected_model(selected_model)
+        with st.spinner("Please wait..."):
+            model, tokenizer, predict_func = load_selected_model(selected_model)
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+            if model is None:
+                st.error(
+                    "⚠️ Error: Model failed to load! Check model selection or configuration.")
+                st.stop()
+
+            model.to(device)
+
+            # predictions = predict(user_input, model, tokenizer, device)
+
+            predictions = predict_func(user_input, model, tokenizer, device)
+
+            # Squeeze predictions to remove extra dimensions
+            predictions_array = predictions.squeeze()
+
+            # Convert to binary predictions (argmax)
+            binary_predictions = np.zeros_like(predictions_array)
+            max_indices = np.argmax(predictions_array)
+            binary_predictions[max_indices] = 1
+
+            # Update progress bar for prediction and model loading
+            update_progress(progress_bar, 10, 100)
+
+        # Display raw predictions
+        st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
+
+        # Display binary classification result
+        st.write(f"**Predicted Sentiment:**")
+        st.write(
+            f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
+        # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
+        # st.write(f"**POSITIVE:** {binary_predictions[2]}")
+
+        # 1️⃣ **Polar Plot (Plotly)**
+        sentiment_polarities = predictions_array.tolist()
+        fig_polar = px.line_polar(
+            pd.DataFrame(dict(r=sentiment_polarities,
+                         theta=SENTIMENT_POLARITY_LABELS)),
+            r='r', theta='theta', line_close=True
+        )
+        st.plotly_chart(fig_polar)
+
+        # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
+        normalized_predictions = predictions_array / predictions_array.sum()
+
+        fig, ax = plt.subplots(figsize=(8, 2))
+        left = 0
+        for i in range(len(normalized_predictions)):
+            ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(
+                i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
+            left += normalized_predictions[i]
+
+        # Configure the chart
+        ax.set_xlim(0, 1)
+        ax.set_yticks([])
+        ax.set_xticks(np.arange(0, 1.1, 0.1))
+        ax.legend(loc='upper center', bbox_to_anchor=(
+            0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
+        plt.title("Sentiment Polarity Prediction Distribution")
+
+        # Display in Streamlit
+        st.pyplot(fig)
+
+        progress_bar.empty()
+
+
+if __name__ == "__main__":
+    show_sentiment_analysis()
+
+
+### COMMENTED OUT CODE ###
+
 
 # def load_selected_model(model_name):
 #     # """Load model and tokenizer based on user selection."""
@@ -157,7 +319,7 @@ def load_selected_model(model_name):
 #     # else:
 #     #     st.error("Invalid model selection")
 #     #     return None, None
-    
+
 
 #     if load_model_func is None or predict_func is None:
 #         st.error("❌ Model functions could not be loaded!")
@@ -167,30 +329,29 @@ def load_selected_model(model_name):
 #     # return model, tokenizer
 
 #     model, tokenizer = load_model_func(hf_location)
-    
+
 #     current_model, current_tokenizer = model, tokenizer
 #     return model, tokenizer, predict_func
 
 
+# def predict(text, model, tokenizer, device, max_len=128):
+#     # Tokenize and pad the input text
+#     inputs = tokenizer(
+#         text,
+#         add_special_tokens=True,
+#         padding=True,
+#         truncation=False,
+#         return_tensors="pt",
+#         return_token_type_ids=False,
+#     ).to(device)  # Move input tensors to the correct device
 
-def predict(text, model, tokenizer, device, max_len=128):
-    # Tokenize and pad the input text
-    inputs = tokenizer(
-        text,
-        add_special_tokens=True,
-        padding=True,
-        truncation=False,
-        return_tensors="pt",
-        return_token_type_ids=False,
-    ).to(device)  # Move input tensors to the correct device
+#     with torch.no_grad():
+#         outputs = model(**inputs)
 
-    with torch.no_grad():
-        outputs = model(**inputs)
+#     # Apply sigmoid activation (for BCEWithLogitsLoss)
+#     probabilities = outputs.logits.cpu().numpy()
 
-    # Apply sigmoid activation (for BCEWithLogitsLoss)
-    probabilities = outputs.logits.cpu().numpy()
-
-    return probabilities 
+#     return probabilities
 
 # def show_sentiment_analysis():
 
@@ -200,97 +361,119 @@ def predict(text, model, tokenizer, device, max_len=128):
     # user_input = st.text_area("Enter text for sentiment analysis:", height=200)
     # user_input = st.text_area("Enter text for sentiment analysis:", max_chars=500)
 
-def show_sentiment_analysis():
-    st.title("Stage 1: Sentiment Polarity Analysis")
-    st.write("This section will handle sentiment analysis.")
+# def show_sentiment_analysis():
+#     st.title("Stage 1: Sentiment Polarity Analysis")
+#     st.write("This section will handle sentiment analysis.")
 
-    if "selected_model" not in st.session_state:
-        st.session_state.selected_model = list(MODEL_OPTIONS.keys())[0]  # Default selection
+#     if "selected_model" not in st.session_state:
+#         st.session_state.selected_model = list(MODEL_OPTIONS.keys())[0]  # Default selection
 
-    if "clear_output" not in st.session_state:
-        st.session_state.clear_output = False
+#     if "clear_output" not in st.session_state:
+#         st.session_state.clear_output = False
 
-    st.selectbox("Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model")
+#     st.selectbox("Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model")
 
-    selected_model = st.session_state.selected_model
+#     selected_model = st.session_state.selected_model
 
-    if selected_model not in MODEL_OPTIONS:
-        st.error(f"❌ Selected model '{selected_model}' not found!")
-        st.stop()
+#     if selected_model not in MODEL_OPTIONS:
+#         st.error(f"❌ Selected model '{selected_model}' not found!")
+#         st.stop()
 
-    st.session_state.clear_output = True  # Reset output when model changes
-
-
-    # st.write("DEBUG: Available Models:", MODEL_OPTIONS.keys())  # ✅ See available models
-    # st.write("DEBUG: Selected Model:", MODEL_OPTIONS[selected_model])  # ✅ Check selected model
+#     st.session_state.clear_output = True  # Reset output when model changes
 
 
-    user_input = st.text_input("Enter text for sentiment analysis:")
-
-    if user_input:
-        # Make prediction
-
-        # model, tokenizer = load_model()
-        # model, tokenizer = load_selected_model(selected_model)
-
-        model, tokenizer, predict_func = load_selected_model(selected_model)
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-        if model is None:
-            st.error("⚠️ Error: Model failed to load! Check model selection or configuration.")
-            st.stop()
-
-        model.to(device)
-
-        # predictions = predict(user_input, model, tokenizer, device)
-
-        predictions = predict_func(user_input, model, tokenizer, device)
-
-        # Squeeze predictions to remove extra dimensions
-        predictions_array = predictions.squeeze()
-
-        # Convert to binary predictions (argmax)
-        binary_predictions = np.zeros_like(predictions_array)
-        max_indices = np.argmax(predictions_array)
-        binary_predictions[max_indices] = 1
-
-        # Display raw predictions
-        st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
-
-        # Display binary classification result
-        st.write(f"**Predicted Sentiment:**")
-        st.write(f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
-        # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
-        # st.write(f"**POSITIVE:** {binary_predictions[2]}")
-
-        # 1️⃣ **Polar Plot (Plotly)**
-        sentiment_polarities = predictions_array.tolist()
-        fig_polar = px.line_polar(
-            pd.DataFrame(dict(r=sentiment_polarities, theta=SENTIMENT_POLARITY_LABELS)), 
-            r='r', theta='theta', line_close=True
-        )
-        st.plotly_chart(fig_polar)
-
-        # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
-        normalized_predictions = predictions_array / predictions_array.sum()
-
-        fig, ax = plt.subplots(figsize=(8, 2))
-        left = 0
-        for i in range(len(normalized_predictions)):
-            ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
-            left += normalized_predictions[i]
-
-        # Configure the chart
-        ax.set_xlim(0, 1)
-        ax.set_yticks([])
-        ax.set_xticks(np.arange(0, 1.1, 0.1))
-        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
-        plt.title("Sentiment Polarity Prediction Distribution")
-
-        # Display in Streamlit
-        st.pyplot(fig)
-        
+#     # st.write("DEBUG: Available Models:", MODEL_OPTIONS.keys())  # ✅ See available models
+#     # st.write("DEBUG: Selected Model:", MODEL_OPTIONS[selected_model])  # ✅ Check selected model
 
 
-if __name__ == "__main__":
-    show_sentiment_analysis()
+#     user_input = st.text_input("Enter text for sentiment analysis:")
+#     user_input_copy = user_input
+
+#     # if st.button("Run Analysis"):
+#     #     if not user_input.strip():
+#     #         st.warning("⚠️ Please enter some text before running analysis.")
+#     #         return
+
+#     # with st.form(key="sentiment_form"):
+#     #     user_input = st.text_input("Enter text for sentiment analysis:")
+#     #     submit_button = st.form_submit_button("Run Analysis")
+
+#     #     user_input_copy = user_input
+
+#     if user_input.strip():
+
+#         ADD A DYNAMIC PROGRESS BAR
+#         progress_bar = st.progress(0)
+#         update_progress(progress_bar, 0, 10)
+#         # status_text = st.empty()
+
+#         # update_progress(0, 10)
+#         # status_text.text("Loading model...")
+
+#         # Make prediction
+
+#         # model, tokenizer = load_model()
+#         # model, tokenizer = load_selected_model(selected_model)
+
+#         model, tokenizer, predict_func = load_selected_model(selected_model)
+#         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+#         if model is None:
+#             st.error("⚠️ Error: Model failed to load! Check model selection or configuration.")
+#             st.stop()
+
+#         model.to(device)
+
+#         # predictions = predict(user_input, model, tokenizer, device)
+
+#         predictions = predict_func(user_input, model, tokenizer, device)
+
+#         # Squeeze predictions to remove extra dimensions
+#         predictions_array = predictions.squeeze()
+
+#         # Convert to binary predictions (argmax)
+#         binary_predictions = np.zeros_like(predictions_array)
+#         max_indices = np.argmax(predictions_array)
+#         binary_predictions[max_indices] = 1
+
+
+#         # Update progress bar for prediction and model loading
+#         update_progress(progress_bar, 10, 100)
+
+#         # Display raw predictions
+#         st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
+
+#         # Display binary classification result
+#         st.write(f"**Predicted Sentiment:**")
+#         st.write(f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
+#         # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
+#         # st.write(f"**POSITIVE:** {binary_predictions[2]}")
+
+#         # 1️⃣ **Polar Plot (Plotly)**
+#         sentiment_polarities = predictions_array.tolist()
+#         fig_polar = px.line_polar(
+#             pd.DataFrame(dict(r=sentiment_polarities, theta=SENTIMENT_POLARITY_LABELS)),
+#             r='r', theta='theta', line_close=True
+#         )
+#         st.plotly_chart(fig_polar)
+
+#         # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
+#         normalized_predictions = predictions_array / predictions_array.sum()
+
+#         fig, ax = plt.subplots(figsize=(8, 2))
+#         left = 0
+#         for i in range(len(normalized_predictions)):
+#             ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
+#             left += normalized_predictions[i]
+
+#         # Configure the chart
+#         ax.set_xlim(0, 1)
+#         ax.set_yticks([])
+#         ax.set_xticks(np.arange(0, 1.1, 0.1))
+#         ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
+#         plt.title("Sentiment Polarity Prediction Distribution")
+
+#         # Display in Streamlit
+#         st.pyplot(fig)
+
+#         progress_bar.empty()
