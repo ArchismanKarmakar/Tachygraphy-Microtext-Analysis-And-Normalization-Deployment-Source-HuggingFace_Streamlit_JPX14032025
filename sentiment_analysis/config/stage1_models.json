@@ -43,5 +43,20 @@
         "device": "cpu",
         "load_function": "load_model",
         "predict_function": "predict"
+    },
+    "4": {
+        "name": "LSTM Custom Model",
+        "type": "lstm_uncased_custom",
+        "module_path": "hmv_cfg_base_stage1.model4",
+        "hf_location": "tachygraphy-microtrext-norm-org/LSTM-LV1-SentimentPolarities",
+        "tokenizer_class": "",
+        "model_class": "",
+        "problem_type": "multi_label_classification",
+        "base_model": "",
+        "base_model_class": "",
+        "num_labels": 3,
+        "device": "cpu",
+        "load_function": "load_model",
+        "predict_function": "predict"
     }
 }

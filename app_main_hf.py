@@ -15,7 +15,7 @@ import shutil
 import gc
 from transformers.utils.hub import TRANSFORMERS_CACHE
 
-torch.classes.__path__ = []
+torch.classes.__path__ = [] 
 
 
 try:

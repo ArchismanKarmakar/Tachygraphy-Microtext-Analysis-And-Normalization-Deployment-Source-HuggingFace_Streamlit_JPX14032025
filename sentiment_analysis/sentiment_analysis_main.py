@@ -195,7 +195,7 @@ if "model_changed" not in st.session_state:
     st.session_state.model_changed = False
 if "text_changed" not in st.session_state:
     st.session_state.text_changed = False
-if "processing" not in st.session_state:
+if "disabled" not in st.session_state:
     st.session_state.disabled = False
 
 
@@ -249,7 +249,9 @@ def show_sentiment_analysis():
                     "⚠️ Error: Model failed to load! Check model selection or configuration.")
                 st.stop()
 
-            model.to(device)
+            # model.to(device)
+            if hasattr(model, "to"):
+                model.to(device)
 
             # predictions = predict(user_input, model, tokenizer, device)
 
@@ -270,7 +272,7 @@ def show_sentiment_analysis():
         st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
 
         # enable_ui()
-
+##
         # Display binary classification result
         st.write(f"**Predicted Sentiment:**")
         st.write(f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
