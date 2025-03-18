@@ -136,7 +136,7 @@ def main():
 
     if selection == "Dashboard":
         st.cache_resource.clear()
-        free_memory()
+        # free_memory()
         show_dashboard()
 
     elif selection == "Stage 1: Sentiment Polarity Analysis":
