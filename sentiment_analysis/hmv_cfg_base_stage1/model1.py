@@ -1,10 +1,18 @@
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_STAGE1 = os.path.join(BASE_DIR, "..", "config", "stage1_models.json")
+
+import torch
 import torch.nn as nn
 from imports import *
 import torch.nn.functional as F
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_STAGE1 = os.path.join(BASE_DIR, "..", "config", "stage1_models.json")
+
 
 MODEL_OPTIONS = {
 "1": {

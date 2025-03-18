@@ -1,17 +1,21 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
+
 from streamlit_extras.bottom_container import bottom
 from streamlit_extras.app_logo import add_logo
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.stylable_container import stylable_container
-
+import torch
 from imports import *
 import streamlit as st
 from streamlit_option_menu import option_menu
-import os
 import asyncio
-import sys
 import shutil
 import gc
 from transformers.utils.hub import TRANSFORMERS_CACHE
+
+# torch.classes.__path__ = []
 
 
 try:
@@ -32,7 +36,7 @@ import joblib
 import importlib
 import importlib.util
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 
 from emotion_analysis import show_emotion_analysis

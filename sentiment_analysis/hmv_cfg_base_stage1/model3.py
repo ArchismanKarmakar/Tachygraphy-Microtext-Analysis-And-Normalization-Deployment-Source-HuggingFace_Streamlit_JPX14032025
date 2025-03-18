@@ -1,3 +1,8 @@
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
+
 from imports import *
 
 import importlib.util
@@ -15,7 +20,6 @@ import json
 from huggingface_hub import hf_hub_download
 from safetensors.torch import save_file, safe_open
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_STAGE1 = os.path.join(BASE_DIR, "..", "config", "stage1_models.json")
