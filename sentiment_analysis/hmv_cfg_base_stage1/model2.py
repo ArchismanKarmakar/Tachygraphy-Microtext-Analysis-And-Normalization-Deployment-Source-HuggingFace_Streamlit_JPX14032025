@@ -30,12 +30,155 @@ MODEL_OPTIONS = {
         "model_class": "SentimentModel",
         "problem_type": "multi_label_classification",
         "base_model": "microsoft/deberta-v3-base",
+        "base_model_class": "DebertaV2Model",
         "num_labels": 3,
         "device": "cpu",
         "load_function": "load_model",
         "predict_function": "predict"
     }
 }
+
+class SentimentModel(nn.Module):
+    def __init__(self, roberta_model, n_classes=3, dropout_rate=0.2):
+        super(SentimentModel, self).__init__()
+
+        self.roberta = roberta_model
+        self.drop = nn.Dropout(p=dropout_rate)
+        self.fc1 = nn.Linear(self.roberta.config.hidden_size, 256)
+        self.relu = nn.ReLU()
+        self.out = nn.Linear(256, n_classes)
+
+    def forward(self, input_ids, attention_mask):
+        output = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
+        cls_token_state = output.last_hidden_state[:, 0, :]
+        output = self.drop(cls_token_state)
+        output = self.relu(self.fc1(output))
+        return self.out(output)
+
+    def save_pretrained(self, save_directory):
+        os.makedirs(save_directory, exist_ok=True)
+
+        model_weights = self.state_dict()
+        save_file(model_weights, os.path.join(save_directory, "model.safetensors"))
+
+        config = {
+            "hidden_size": self.roberta.config.hidden_size,
+            "num_labels": self.out.out_features,
+            "dropout_rate": self.drop.p,
+            "roberta_model": self.roberta.name_or_path,  # ✅ Save model name
+        }
+        with open(os.path.join(save_directory, "config.json"), "w") as f:
+            json.dump(config, f)
+
+        print(f"Model saved in {save_directory}")
+
+
+    @classmethod
+    @st.cache_resource
+    def load_pretrained(cls, model_path_or_repo):
+        """Loads and caches the model (RoBERTa + SentimentModel) only when called."""
+        print(f"Loading model from {model_path_or_repo}...")
+
+        model_config_path = hf_hub_download(model_path_or_repo, "config.json")
+        model_weights_path = hf_hub_download(model_path_or_repo, "model.safetensors")
+
+        with open(model_config_path, "r") as f:
+            config = json.load(f)
+
+        print(f"Loading RoBERTa model: {config['roberta_model']}...")
+        roberta_model = DebertaV2Model.from_pretrained(
+            config["roberta_model"],
+        )
+
+        model = cls(
+            roberta_model, n_classes=config["num_labels"], dropout_rate=config["dropout_rate"]
+        )
+
+        with safe_open(model_weights_path, framework="pt", device="cpu") as f:
+            model_weights = {key: f.get_tensor(key) for key in f.keys()}
+        model.load_state_dict(model_weights)
+
+        print(f"Model loaded from {model_path_or_repo}")
+        return model
+    
+
+model_key = "2"
+model_info = MODEL_OPTIONS[model_key]
+hf_location = model_info["hf_location"]
+base_model = model_info["base_model"]
+
+tokenizer_class = globals()[model_info["tokenizer_class"]]
+model_class = globals()[model_info["model_class"]]
+
+    
+@st.cache_resource
+def load_model():
+    tokenizer = tokenizer_class.from_pretrained(hf_location)
+    print("Loading model 2")
+    model = SentimentModel.load_pretrained(hf_location)
+    print("Model 2 loaded")
+    # model.eval()
+
+    return model, tokenizer
+
+
+def predict(text, model, tokenizer, device, max_len=128):
+    # model.eval()  # Set model to evaluation mode
+
+    # Tokenize and pad the input text
+    inputs = tokenizer(
+        text,
+        add_special_tokens=True,
+        padding=True,
+        truncation=False,
+        return_tensors="pt",
+        return_token_type_ids=False,
+    ).to(device)  # Move input tensors to the correct device
+
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    # Apply sigmoid activation (for BCEWithLogitsLoss)
+    probabilities = torch.sigmoid(outputs).cpu().numpy()
+    # probabilities = outputs.cpu().numpy()
+
+    return probabilities
+
+
+if __name__ == "__main__":
+    model, tokenizer = load_model()
+    print("Model and tokenizer loaded successfully.")
+
+
+### COMMENTED CODE ###
+
+
+# @st.cache_resource
+
+# def load_pretrained(model_path_or_repo):
+
+#     model_config_path = hf_hub_download(model_path_or_repo, "config.json")
+#     model_weights_path = hf_hub_download(model_path_or_repo, "model.safetensors")
+
+#     with open(model_config_path, "r") as f:
+#         config = json.load(f)
+
+#     roberta_model = DebertaV2Model.from_pretrained(
+#         config["roberta_model"],
+#     )
+
+#     model = SentimentModel(
+#         roberta_model, n_classes=config["num_labels"], dropout_rate=config["dropout_rate"]
+#     )
+
+#     with safe_open(model_weights_path, framework="pt", device="cpu") as f:
+#         model_weights = {key: f.get_tensor(key) for key in f.keys()}
+#     model.load_state_dict(model_weights)
+
+#     print(f"Model loaded from {model_path_or_repo}")
+#     return model
+
+
 
 
 # class SentimentModel(nn.Module):
@@ -112,139 +255,3 @@ MODEL_OPTIONS = {
 
 #         print(f"Model loaded from {model_path_or_repo}")
 #         return model
-
-
-class SentimentModel(nn.Module):
-    def __init__(self, roberta_model, n_classes=3, dropout_rate=0.2):
-        super(SentimentModel, self).__init__()
-
-        self.roberta = roberta_model
-        self.drop = nn.Dropout(p=dropout_rate)
-        self.fc1 = nn.Linear(self.roberta.config.hidden_size, 256)
-        self.relu = nn.ReLU()
-        self.out = nn.Linear(256, n_classes)
-
-    def forward(self, input_ids, attention_mask):
-        output = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
-        cls_token_state = output.last_hidden_state[:, 0, :]
-        output = self.drop(cls_token_state)
-        output = self.relu(self.fc1(output))
-        return self.out(output)
-
-    def save_pretrained(self, save_directory):
-        os.makedirs(save_directory, exist_ok=True)
-
-        model_weights = self.state_dict()
-        save_file(model_weights, os.path.join(save_directory, "model.safetensors"))
-
-        config = {
-            "hidden_size": self.roberta.config.hidden_size,
-            "num_labels": self.out.out_features,
-            "dropout_rate": self.drop.p,
-            "roberta_model": self.roberta.name_or_path,  # ✅ Save model name
-        }
-        with open(os.path.join(save_directory, "config.json"), "w") as f:
-            json.dump(config, f)
-
-        print(f"Model saved in {save_directory}")
-
-
-    @classmethod
-    @st.cache_resource
-    def load_pretrained(cls, model_path_or_repo):
-        """Loads and caches the model (RoBERTa + SentimentModel) only when called."""
-        print(f"Loading model from {model_path_or_repo}...")
-
-        model_config_path = hf_hub_download(model_path_or_repo, "config.json")
-        model_weights_path = hf_hub_download(model_path_or_repo, "model.safetensors")
-
-        with open(model_config_path, "r") as f:
-            config = json.load(f)
-
-        print(f"Loading RoBERTa model: {config['roberta_model']}...")
-        roberta_model = DebertaV2Model.from_pretrained(
-            config["roberta_model"],
-        )
-
-        model = cls(
-            roberta_model, n_classes=config["num_labels"], dropout_rate=config["dropout_rate"]
-        )
-
-        with safe_open(model_weights_path, framework="pt", device="cpu") as f:
-            model_weights = {key: f.get_tensor(key) for key in f.keys()}
-        model.load_state_dict(model_weights)
-
-        print(f"Model loaded from {model_path_or_repo}")
-        return model
-
-
-@st.cache_resource
-
-# def load_pretrained(model_path_or_repo):
-
-#     model_config_path = hf_hub_download(model_path_or_repo, "config.json")
-#     model_weights_path = hf_hub_download(model_path_or_repo, "model.safetensors")
-
-#     with open(model_config_path, "r") as f:
-#         config = json.load(f)
-
-#     roberta_model = DebertaV2Model.from_pretrained(
-#         config["roberta_model"],
-#     )
-
-#     model = SentimentModel(
-#         roberta_model, n_classes=config["num_labels"], dropout_rate=config["dropout_rate"]
-#     )
-
-#     with safe_open(model_weights_path, framework="pt", device="cpu") as f:
-#         model_weights = {key: f.get_tensor(key) for key in f.keys()}
-#     model.load_state_dict(model_weights)
-
-#     print(f"Model loaded from {model_path_or_repo}")
-#     return model
-
-    
-
-def load_model():
-    model_key = "2"
-    model_info = MODEL_OPTIONS[model_key]
-    hf_location = model_info["hf_location"]
-
-    tokenizer_class = globals()[model_info["tokenizer_class"]]
-    model_class = globals()[model_info["model_class"]]
-    tokenizer = tokenizer_class.from_pretrained(hf_location)
-    print("Loading model 2")
-    model = SentimentModel.load_pretrained(hf_location)
-    print("Model 2 loaded")
-    # model.eval()
-
-    return model, tokenizer
-
-
-def predict(text, model, tokenizer, device, max_len=128):
-    # model.eval()  # Set model to evaluation mode
-
-    # Tokenize and pad the input text
-    inputs = tokenizer(
-        text,
-        None,
-        add_special_tokens=True,
-        padding=True,
-        truncation=False,
-        return_tensors="pt",
-        return_token_type_ids=False,
-    ).to(device)  # Move input tensors to the correct device
-
-    with torch.no_grad():
-        outputs = model(**inputs)
-
-    # Apply sigmoid activation (for BCEWithLogitsLoss)
-    probabilities = torch.sigmoid(outputs).cpu().numpy()
-    # probabilities = outputs.cpu().numpy()
-
-    return probabilities
-
-
-if __name__ == "__main__":
-    model, tokenizer = load_model("2")
-    print("Model and tokenizer loaded successfully.")

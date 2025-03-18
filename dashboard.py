@@ -40,6 +40,39 @@ def free_memory():
     except Exception as e:
         print(f"❌ Cache cleanup error: {e}")
 
+
+def create_footer():
+    st.divider()
+
+    # 🛠️ Layout using Streamlit columns
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    # 🚀 Contributors Section
+    with col1:
+        st.markdown("### 🚀 Contributors")
+        st.write("**Archisman Karmakar**")
+        st.write("[🔗 LinkedIn](https://www.linkedin.com/in/archismankarmakar/) | [🐙 GitHub](https://www.github.com/ArchismanKarmakar) | [📊 Kaggle](https://www.kaggle.com/archismancoder)")
+
+        st.write("**Sumon Chatterjee**")
+        st.write("[🔗 LinkedIn](https://www.linkedin.com/in/sumon-chatterjee-3b3b43227) | [🐙 GitHub](https://github.com/Sumon670) | [📊 Kaggle](https://www.kaggle.com/sumonchatterjee)")
+
+    # 🎓 Mentors Section
+    with col2:
+        st.markdown("### 🎓 Mentors")
+        st.write("**Prof. Anupam Mondal**")
+        st.write("[🔗 LinkedIn](https://www.linkedin.com/in/anupam-mondal-ph-d-8a7a1a39/) | [📚 Google Scholar](https://scholar.google.com/citations?user=ESRR9o4AAAAJ&hl=en) | [🌐 Website](https://sites.google.com/view/anupammondal/home)")
+
+        st.write("**Prof. Sainik Kumar Mahata**")
+        st.write("[🔗 LinkedIn](https://www.linkedin.com/in/mahatasainikk) | [📚 Google Scholar](https://scholar.google.co.in/citations?user=OcJDM50AAAAJ&hl=en) | [🌐 Website](https://sites.google.com/view/sainik-kumar-mahata/home)")
+
+    # 📌 Research Project Info Section
+    with col3:
+        st.markdown("### 📝 About the Project")
+        st.write("This is our research project for our **B.Tech final year** and a **journal** which is yet to be published.")
+        st.write("Built with 💙 using **Streamlit**.")
+
+# 🚀 Display Footer
+
 def show_dashboard():
     # free_memory()
     st.title("Tachygraphy Micro-text Analysis & Normalization")
@@ -49,6 +82,8 @@ def show_dashboard():
         2. Emotion Mood-tag Analysis
         3. Text Transformation & Normalization
     """)
+
+    create_footer()
 
 
 def __main__():

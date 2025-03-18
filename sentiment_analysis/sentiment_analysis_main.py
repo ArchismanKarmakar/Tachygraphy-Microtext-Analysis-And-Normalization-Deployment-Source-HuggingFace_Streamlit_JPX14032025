@@ -29,7 +29,7 @@ current_tokenizer = None
 # Enabling Resource caching
 
 
-@st.cache_resource
+# @st.cache_resource
 def load_model_config():
     with open(CONFIG_STAGE1, "r") as f:
         model_data = json.load(f)
@@ -91,9 +91,9 @@ def free_memory():
 def load_selected_model(model_name):
     global current_model, current_tokenizer
 
-    st.cache_resource.clear()
+    # st.cache_resource.clear()
 
-    free_memory()
+    # free_memory()
 
     # st.write("DEBUG: Available Models:", MODEL_OPTIONS.keys())  # ✅ See available models
     # st.write("DEBUG: Selected Model:", MODEL_OPTIONS[model_name])  # ✅ Check selected model
@@ -122,6 +122,41 @@ def load_selected_model(model_name):
     current_model, current_tokenizer = model, tokenizer
     return model, tokenizer, predict_func
 
+
+def disable_ui():
+    st.components.v1.html(
+        """
+        <style>
+        #ui-disable-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(200, 200, 200, 0.5);
+            z-index: 9999;
+        }
+        </style>
+        <div id="ui-disable-overlay"></div>
+        """,
+        height=0,
+        scrolling=False
+    )
+
+
+def enable_ui():
+    st.components.v1.html(
+        """
+        <script>
+        var overlay = document.getElementById("ui-disable-overlay");
+        if (overlay) {
+            overlay.parentNode.removeChild(overlay);
+        }
+        </script>
+        """,
+        height=0,
+        scrolling=False
+    )
 
 # Function to increment progress dynamically
 def update_progress(progress_bar, start, end, delay=0.1):
@@ -156,12 +191,10 @@ if "model_changed" not in st.session_state:
 if "text_changed" not in st.session_state:
     st.session_state.text_changed = False
 if "processing" not in st.session_state:
-    st.session_state.processing = False
+    st.session_state.disabled = False
 
 
 def show_sentiment_analysis():
-    st.cache_resource.clear()
-    free_memory()
 
     st.title("Stage 1: Sentiment Polarity Analysis")
     st.write("This section handles sentiment analysis.")
@@ -181,6 +214,9 @@ def show_sentiment_analysis():
     # 1. The text is NOT empty
     # 2. The text has changed OR the model has changed
     if user_input.strip() and (st.session_state.text_changed or st.session_state.model_changed):
+
+        # disable_ui()
+
 
         # Reset session state flags
         st.session_state.last_processed_input = user_input
@@ -228,10 +264,11 @@ def show_sentiment_analysis():
         # Display raw predictions
         st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
 
+        # enable_ui()
+
         # Display binary classification result
         st.write(f"**Predicted Sentiment:**")
-        st.write(
-            f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
+        st.write(f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
         # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
         # st.write(f"**POSITIVE:** {binary_predictions[2]}")
 
@@ -270,6 +307,281 @@ def show_sentiment_analysis():
 
 if __name__ == "__main__":
     show_sentiment_analysis()
+
+
+
+
+
+
+
+
+
+
+#########
+
+
+# def show_sentiment_analysis():
+#     st.cache_resource.clear()
+#     free_memory()
+
+#     st.title("Stage 1: Sentiment Polarity Analysis")
+#     st.write("This section handles sentiment analysis.")
+
+#     # Model selection with change detection
+#     selected_model = st.selectbox(
+#         "Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model", on_change=on_model_change
+#     )
+
+#     # Text input with change detection
+#     user_input = st.text_input(
+#         "Enter text for sentiment analysis:", key="user_input", on_change=on_text_change
+#     )
+#     user_input_copy = user_input
+
+#     # Only run inference if:
+#     # 1. The text is NOT empty
+#     # 2. The text has changed OR the model has changed
+#     if user_input.strip() and (st.session_state.text_changed or st.session_state.model_changed):
+
+#         # Reset session state flags
+#         st.session_state.last_processed_input = user_input
+#         st.session_state.model_changed = False
+#         st.session_state.text_changed = False   # Store selected model
+
+#         # ADD A DYNAMIC PROGRESS BAR
+#         progress_bar = st.progress(0)
+#         update_progress(progress_bar, 0, 10)
+#         # status_text = st.empty()
+
+#         # update_progress(0, 10)
+#         # status_text.text("Loading model...")
+
+#         # Make prediction
+
+#         # model, tokenizer = load_model()
+#         # model, tokenizer = load_selected_model(selected_model)
+#         with st.spinner("Please wait..."):
+#             model, tokenizer, predict_func = load_selected_model(selected_model)
+#             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+#             if model is None:
+#                 st.error(
+#                     "⚠️ Error: Model failed to load! Check model selection or configuration.")
+#                 st.stop()
+
+#             model.to(device)
+
+#             # predictions = predict(user_input, model, tokenizer, device)
+
+#             predictions = predict_func(user_input, model, tokenizer, device)
+
+#             # Squeeze predictions to remove extra dimensions
+#             predictions_array = predictions.squeeze()
+
+#             # Convert to binary predictions (argmax)
+#             binary_predictions = np.zeros_like(predictions_array)
+#             max_indices = np.argmax(predictions_array)
+#             binary_predictions[max_indices] = 1
+
+#             # Update progress bar for prediction and model loading
+#             update_progress(progress_bar, 10, 100)
+
+#         # Display raw predictions
+#         st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
+
+#         # Display binary classification result
+#         st.write(f"**Predicted Sentiment:**")
+#         st.write(
+#             f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
+#         # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
+#         # st.write(f"**POSITIVE:** {binary_predictions[2]}")
+
+#         # 1️⃣ **Polar Plot (Plotly)**
+#         sentiment_polarities = predictions_array.tolist()
+#         fig_polar = px.line_polar(
+#             pd.DataFrame(dict(r=sentiment_polarities,
+#                          theta=SENTIMENT_POLARITY_LABELS)),
+#             r='r', theta='theta', line_close=True
+#         )
+#         st.plotly_chart(fig_polar)
+
+#         # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
+#         normalized_predictions = predictions_array / predictions_array.sum()
+
+#         fig, ax = plt.subplots(figsize=(8, 2))
+#         left = 0
+#         for i in range(len(normalized_predictions)):
+#             ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(
+#                 i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
+#             left += normalized_predictions[i]
+
+#         # Configure the chart
+#         ax.set_xlim(0, 1)
+#         ax.set_yticks([])
+#         ax.set_xticks(np.arange(0, 1.1, 0.1))
+#         ax.legend(loc='upper center', bbox_to_anchor=(
+#             0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
+#         plt.title("Sentiment Polarity Prediction Distribution")
+
+#         # Display in Streamlit
+#         st.pyplot(fig)
+
+#         progress_bar.empty()
+
+######
+########
+
+
+
+# def show_sentiment_analysis():
+#     st.cache_resource.clear()
+#     free_memory()
+
+#     st.title("Stage 1: Sentiment Polarity Analysis")
+#     st.write("This section handles sentiment analysis.")
+
+#     # Model selection with change detection
+#     selected_model = st.selectbox(
+#         "Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model", on_change=on_model_change, disabled=st.session_state.disabled
+#     )
+
+#     # Text input with change detection
+#     user_input = st.text_input(
+#         "Enter text for sentiment analysis:", key="user_input", on_change=on_text_change, disabled=st.session_state.disabled
+#     )
+#     user_input_copy = user_input
+
+#     # progress_bar = st.progress(0)
+#     progress_bar = st.empty()
+
+#     if st.session_state.disabled is False and st.session_state.predictions is not None:
+#         st.write(f"**Predicted Sentiment Scores:** {st.session_state.predictions}")
+#         st.write(f"**NEGATIVE:** {st.session_state.binary_predictions[0]}, **NEUTRAL:** {st.session_state.binary_predictions[1]}, **POSITIVE:** {st.session_state.binary_predictions[2]}")
+#         st.plotly_chart(st.session_state.polar_plot)
+#         st.pyplot(st.session_state.bar_chart)
+
+#         update_progress(progress_bar, 95, 100)
+
+#         st.session_state.predictions = None
+#         st.session_state.binary_predictions = None
+#         st.session_state.polar_plot = None
+#         st.session_state.bar_chart = None
+        
+#         st.session_state.disabled = False
+            
+#         progress_bar.empty()
+
+
+#     if user_input.strip() and (st.session_state.text_changed or st.session_state.model_changed) and st.session_state.disabled is False:
+#         st.session_state.disabled = True
+#         st.rerun()
+#         return
+        
+    
+#     if user_input.strip() and (st.session_state.text_changed or st.session_state.model_changed) and st.session_state.disabled is True:
+#         # Mark processing as True to
+        
+
+#         # Reset session state flags
+#         st.session_state.last_processed_input = user_input
+#         st.session_state.model_changed = False
+#         st.session_state.text_changed = False   # Store selected model
+
+#         # ADD A DYNAMIC PROGRESS BAR
+#         progress_bar = st.progress(0)
+#         update_progress(progress_bar, 0, 10)
+#         # status_text = st.empty()
+
+#         # update_progress(0, 10)
+#         # status_text.text("Loading model...")
+
+#         # Make prediction
+
+#         # model, tokenizer = load_model()
+#         # model, tokenizer = load_selected_model(selected_model)
+#         with st.spinner("Please wait..."):
+#             model, tokenizer, predict_func = load_selected_model(selected_model)
+#             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+#             if model is None:
+#                 st.error(
+#                     "⚠️ Error: Model failed to load! Check model selection or configuration.")
+#                 st.session_state.disabled = False
+#                 st.rerun()
+#                 st.stop()
+#                 return
+
+#             model.to(device)
+
+#             # predictions = predict(user_input, model, tokenizer, device)
+
+#             predictions = predict_func(user_input, model, tokenizer, device)
+
+#             # Squeeze predictions to remove extra dimensions
+#             predictions_array = predictions.squeeze()
+
+#             # Convert to binary predictions (argmax)
+#             binary_predictions = np.zeros_like(predictions_array)
+#             max_indices = np.argmax(predictions_array)
+#             binary_predictions[max_indices] = 1
+
+#             # Update progress bar for prediction and model loading
+#             update_progress(progress_bar, 10, 75)
+
+#         # Display raw predictions
+#         # st.write(f"**Predicted Sentiment Scores:** {predictions_array}")
+#         st.session_state.predictions = predictions_array
+
+#         # Display binary classification result
+#         # st.write(f"**Predicted Sentiment:**")
+#         # st.write(f"**NEGATIVE:** {binary_predictions[0]}, **NEUTRAL:** {binary_predictions[1]}, **POSITIVE:** {binary_predictions[2]}")
+#         st.session_state.binary_predictions = binary_predictions
+
+
+#         # 1️⃣ **Polar Plot (Plotly)**
+#         sentiment_polarities = predictions_array.tolist()
+#         fig_polar = px.line_polar(
+#             pd.DataFrame(dict(r=sentiment_polarities,
+#                         theta=SENTIMENT_POLARITY_LABELS)),
+#             r='r', theta='theta', line_close=True
+#         )
+#         # st.plotly_chart(fig_polar)
+#         st.session_state.polar_plot = fig_polar
+
+#         # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
+#         normalized_predictions = predictions_array / predictions_array.sum()
+
+#         fig, ax = plt.subplots(figsize=(8, 2))
+#         left = 0
+#         for i in range(len(normalized_predictions)):
+#             ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(
+#                 i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
+#             left += normalized_predictions[i]
+
+#         # Configure the chart
+#         ax.set_xlim(0, 1)
+#         ax.set_yticks([])
+#         ax.set_xticks(np.arange(0, 1.1, 0.1))
+#         ax.legend(loc='upper center', bbox_to_anchor=(
+#             0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
+#         # plt.title("Sentiment Polarity Prediction Distribution")
+#         # st.pyplot(fig)
+#         st.session_state.bar_chart = fig
+#         update_progress(progress_bar, 75, 95)
+
+#         # progress_bar.empty()
+
+#         if st.session_state.disabled is True:
+#             st.session_state.disabled = False
+#             st.rerun()
+#             return
+#         else:
+#             return
+        
+
+
+
+#####
 
 
 ### COMMENTED OUT CODE ###

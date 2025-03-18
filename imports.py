@@ -14,6 +14,7 @@ import importlib.util
 import asyncio
 import sys
 import pytorch_lightning as pl
+from transformers.utils.hub import TRANSFORMERS_CACHE
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))

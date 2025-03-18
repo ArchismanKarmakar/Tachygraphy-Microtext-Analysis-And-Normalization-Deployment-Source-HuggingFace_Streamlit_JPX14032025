@@ -1,6 +1,6 @@
 [project]
 name = "tachygraphy-microtext-analysis-and-normalization"
-version = "2025.03.18.post1"
+version = "2025.03.18.post3"
 description = ""
 authors = [
     { name = "Archisman Karmakar", email = "92569441+ArchismanKarmakar@users.noreply.github.com" },
@@ -194,6 +194,9 @@ dependencies = [
     "zstandard (>=0.23.0,<0.24.0)",
     "asyncio (>=3.4.3,<4.0.0)",
     "pytorch-lightning (>=2.5.0.post0,<3.0.0)",
+    "streamlit-option-menu (>=0.4.0,<0.5.0)",
+    "streamlit-elements (>=0.1.0,<0.2.0)",
+    "streamlit-extras (>=0.6.0,<0.7.0)",
 ]
 
 

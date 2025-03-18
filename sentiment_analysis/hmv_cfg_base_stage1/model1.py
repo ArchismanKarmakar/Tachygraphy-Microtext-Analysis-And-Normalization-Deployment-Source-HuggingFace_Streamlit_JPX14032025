@@ -16,6 +16,7 @@ MODEL_OPTIONS = {
         "model_class": "DebertaV2ForSequenceClassification",
         "problem_type": "multi_label_classification",
         "base_model": "microsoft/deberta-v3-base",
+        "base_model_class": "DebertaV2ForSequenceClassification",
         "num_labels": 3,
         "device": "cpu",
         "load_function": "load_model",
@@ -24,15 +25,16 @@ MODEL_OPTIONS = {
 }
 
 
+model_key = "1"
+model_info = MODEL_OPTIONS[model_key]
+hf_location = model_info["hf_location"]
+
+tokenizer_class = globals()[model_info["tokenizer_class"]]
+model_class = globals()[model_info["model_class"]]
+
+
 @st.cache_resource
-
 def load_model():
-    model_key = "1"
-    model_info = MODEL_OPTIONS[model_key]
-    hf_location = model_info["hf_location"]
-
-    tokenizer_class = globals()[model_info["tokenizer_class"]]
-    model_class = globals()[model_info["model_class"]]
     tokenizer = tokenizer_class.from_pretrained(hf_location)
     print("Loading model 1")
     model = model_class.from_pretrained(hf_location,
@@ -71,5 +73,5 @@ def predict(text, model, tokenizer, device, max_len=128):
 
 
 if __name__ == "__main__":
-    model, tokenizer = load_model("1")
+    model, tokenizer = load_model()
     print("Model and tokenizer loaded successfully.")
