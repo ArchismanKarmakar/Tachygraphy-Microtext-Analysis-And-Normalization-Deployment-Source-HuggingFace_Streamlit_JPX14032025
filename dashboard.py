@@ -88,10 +88,10 @@ def show_dashboard():
     """)
 
     st.write("""
-             Training Source GitHub Repository: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
-             Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
-             Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtrext-norm-org)
-             Deployment: [Streamlit + Hugging Face @ GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
+             - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
+             - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
+             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtrext-norm-org)
+             - Deployment: [Streamlit + Hugging Face @ GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
              """)
 
     create_footer()
