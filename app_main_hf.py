@@ -2,9 +2,7 @@ from streamlit_extras.bottom_container import bottom
 from streamlit_extras.app_logo import add_logo
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_extras.stylable_container import stylable_container
-from emotion_analysis import show_emotion_analysis
-from sentiment_analysis.sentiment_analysis_main import show_sentiment_analysis
-from dashboard import show_dashboard
+
 from imports import *
 import streamlit as st
 from streamlit_option_menu import option_menu
@@ -14,6 +12,12 @@ import sys
 import shutil
 import gc
 from transformers.utils.hub import TRANSFORMERS_CACHE
+
+
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.run(asyncio.sleep(0))
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -29,6 +33,11 @@ import importlib
 import importlib.util
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
+
+
+from emotion_analysis import show_emotion_analysis
+from sentiment_analysis.sentiment_analysis_main import show_sentiment_analysis
+from dashboard import show_dashboard
 
 
 # from text_transformation import show_text_transformation
