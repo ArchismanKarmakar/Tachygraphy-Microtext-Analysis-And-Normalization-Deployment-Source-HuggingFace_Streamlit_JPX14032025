@@ -1,13 +1,13 @@
+import gc
+import psutil
+import torch
+import shutil
+from transformers.utils.hub import TRANSFORMERS_CACHE
+import streamlit as st
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
-import streamlit as st
-from transformers.utils.hub import TRANSFORMERS_CACHE
-import shutil
-import torch
-import psutil
-import gc
 
 def free_memory():
     #  """Free up CPU & GPU memory before loading a new model."""
@@ -76,6 +76,7 @@ def create_footer():
 
 # 🚀 Display Footer
 
+
 def show_dashboard():
     # free_memory()
     st.title("Tachygraphy Micro-text Analysis & Normalization")
@@ -85,6 +86,13 @@ def show_dashboard():
         2. Emotion Mood-tag Analysis
         3. Text Transformation & Normalization
     """)
+
+    st.write("""
+             Training Source GitHub Repository: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
+             Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
+             Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtrext-norm-org)
+             Deployment: [Streamlit + Hugging Face @ GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
+             """)
 
     create_footer()
 
