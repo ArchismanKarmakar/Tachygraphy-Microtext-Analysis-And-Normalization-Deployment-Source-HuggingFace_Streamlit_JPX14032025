@@ -141,18 +141,18 @@ def main():
 
     elif selection == "Stage 1: Sentiment Polarity Analysis":
         st.cache_resource.clear()
-        free_memory()
+        # free_memory()
         show_sentiment_analysis()
 
     elif selection == "Stage 2: Emotion Mood-tag Analysis":
         st.cache_resource.clear()
-        free_memory()
+        # free_memory()
         # show_emotion_analysis()
         st.write("This section is under development.")
 
     elif selection == "Stage 3: Text Transformation & Normalization":
         st.cache_resource.clear()
-        free_memory()
+        # free_memory()
         # show_text_transformation()
         st.write("This section is under development.")
 
