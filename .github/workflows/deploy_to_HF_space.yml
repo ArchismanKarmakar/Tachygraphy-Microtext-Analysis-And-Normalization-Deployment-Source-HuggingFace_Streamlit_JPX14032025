@@ -39,7 +39,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install poetry
+          # pip install poetry
+          pip install --upgrade poetry --upgrade-strategy eager
           # poetry install --no-root
           poetry export -f requirements.txt --without-hashes --output requirements.txt
 
