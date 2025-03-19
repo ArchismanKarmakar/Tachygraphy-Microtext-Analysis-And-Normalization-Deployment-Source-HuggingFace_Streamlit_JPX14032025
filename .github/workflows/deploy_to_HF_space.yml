@@ -42,10 +42,10 @@ jobs:
             pip install -r requirements.txt
           fi
           # Optionally install the package using pyproject.toml if needed
-          if [ -f pyproject.toml ]; then
-            echo "Installing package via pyproject.toml"
-            pip install .
-          fi
+          # if [ -f pyproject.toml ]; then
+          #   echo "Installing package via pyproject.toml"
+          #   pip install .
+          # fi
 
       - name: Install Hugging Face CLI
         run: pip install huggingface_hub
