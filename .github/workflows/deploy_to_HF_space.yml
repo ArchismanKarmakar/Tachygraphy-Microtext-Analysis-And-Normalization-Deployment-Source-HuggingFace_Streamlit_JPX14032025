@@ -60,7 +60,7 @@ jobs:
         env:
           HF_READ_WRITE_TOKEN: ${{ secrets.HF_READ_WRITE_TOKEN }}
         run: |
-          git remote add space https://huggingface.co/spaces/YOUR_HF_USERNAME/SPACE_NAME
+          git remote add space https://huggingface.co/spaces/HF_USERNAME/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
           git push --force https://HF_USERNAME:${{ secrets.HF_READ_WRITE_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
 
 
