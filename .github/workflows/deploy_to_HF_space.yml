@@ -40,9 +40,11 @@ jobs:
       - name: Install & configure Poetry
         run: |
           # - name: Disable Poetry virtualenv creation
-          poetry config virtualenvs.create false
-
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          
           pip install --upgrade poetry --upgrade-strategy eager
+          poetry config virtualenvs.create false
           poetry --version
           poetry add poetry-plugin-export
 
