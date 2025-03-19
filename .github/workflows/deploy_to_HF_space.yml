@@ -24,6 +24,7 @@ jobs:
 
       - name: Environment Setup & Install system packages from packages.txt
         run: |
+          sudo add-apt-repository universe
           sudo apt-get update
           sudo xargs -a packages.txt apt-get install -y
 
