@@ -1,4 +1,6 @@
 name: Deploy to Hugging Face Spaces
+permissions:
+  contents: read
 
 on:
   push:
@@ -8,6 +10,8 @@ on:
 
 jobs:
   deploy-to-hf:
+    # permissions:
+    #   pull-requests: write
     runs-on: ubuntu-latest
 
     steps:
