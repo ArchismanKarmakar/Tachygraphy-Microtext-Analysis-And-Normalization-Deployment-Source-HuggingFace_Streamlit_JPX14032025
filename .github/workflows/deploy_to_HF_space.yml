@@ -47,6 +47,7 @@ jobs:
           poetry config virtualenvs.create false
           poetry --version
           poetry add poetry-plugin-export
+          poetry self add poetry-plugin-export
 
 
       - name: Install dependencies
