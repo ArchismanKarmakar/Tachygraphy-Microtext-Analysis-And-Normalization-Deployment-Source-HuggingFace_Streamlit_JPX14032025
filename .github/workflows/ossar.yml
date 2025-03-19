@@ -31,11 +31,12 @@ jobs:
       - name: Enable long paths in Git
         run: git config --system core.longpaths true
 
-      - name: Checkout repository
+      - name: Checkout repository into short path
         uses: actions/checkout@v4
         with:
+          path: repo            # Clones into a folder named "repo" to shorten paths
           clean: true
-          fetch-depth: 1  # Fetch only the latest commit
+          fetch-depth: 1        # Fetch only the latest commit
 
       # Uncomment the next step if you are using a self-hosted runner that does not have a compatible .NET version installed.
       # - name: Install .NET
@@ -58,4 +59,3 @@ jobs:
       - name: Fail on findings
         if: steps.ossar.outputs.exit_code != '0'
         run: exit 1
-
