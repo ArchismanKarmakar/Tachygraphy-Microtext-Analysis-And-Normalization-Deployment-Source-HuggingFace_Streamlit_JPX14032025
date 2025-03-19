@@ -29,15 +29,27 @@ jobs:
           sudo apt-get update
           sudo xargs -a packages.txt apt-get install -y
 
+      - name: Rename Poetry files to ingore
+        run: |
+          mv pyproj.toml pyproject.toml.ignore
+          mv poetry.lock poetry.lock.ignore
+
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
       - name: Install dependencies
         run: |
           pip install poetry
-          poetry install --no-root
+          # poetry install --no-root
+
+          pip install -r requirements.txt
           
           # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Rename Poetry files to original
+        run: |
+          mv pyproject.toml.ignore pyproject.toml
+          mv poetry.lock.ignore poetry.lock
 
       - name: Configure Git
         run: |
