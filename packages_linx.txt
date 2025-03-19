@@ -1,1 +1,2 @@
+openmpi-bin
 libopenmpi-dev

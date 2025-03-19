@@ -119,7 +119,7 @@ def main():
                 "icon": {"color": "#6c757d", "font-size": "18px"},
                 "nav-link": {
                     "font-size": "16px",
-                    "text-align": "center",
+                    "text-align": "left",
                     "margin": "0px",
                     "color": "#6c757d",
                     "transition": "0.3s",
