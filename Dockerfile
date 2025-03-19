@@ -1,10 +1,14 @@
 # Use a slim Python 3.12 image
 FROM python:3.12-slim
 
-# Install any system dependencies (adjust as needed)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Copy your packages.txt file into the container
+COPY packages.txt .
+
+# Update package lists, upgrade installed packages, then install system dependencies
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    xargs -a packages.txt apt-get install -y --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
@@ -12,10 +16,10 @@ WORKDIR /app
 # Copy dependency files
 COPY requirements.txt .
 
-# Upgrade pip and install dependencies
+# Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy the rest of the app's code
+# Copy the rest of your app's code
 COPY . .
 
 # Expose the port Streamlit uses
