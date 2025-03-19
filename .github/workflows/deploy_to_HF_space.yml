@@ -59,13 +59,27 @@ jobs:
           # Use rsync to copy all files except the hf-space directory to avoid copying the clone into itself
           rsync -av --exclude='hf-space' ./ hf-space/
 
+      # - name: Commit and push to Hugging Face
+      #   run: |
+      #     cd hf-space
+      #     git init
+      #     git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+      #     git checkout -b main
+      #     git add .
+      #     git commit -m "Update deployment via GitHub Actions"
+      #     git push -f origin main
+      #     echo "Deployment to Hugging Face Spaces completed!"
+
       - name: Commit and push to Hugging Face
         run: |
           cd hf-space
           git init
+          # Remove existing origin if it exists
+          git remote remove origin || true
           git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
           git checkout -b main
           git add .
           git commit -m "Update deployment via GitHub Actions"
           git push -f origin main
           echo "Deployment to Hugging Face Spaces completed!"
+
