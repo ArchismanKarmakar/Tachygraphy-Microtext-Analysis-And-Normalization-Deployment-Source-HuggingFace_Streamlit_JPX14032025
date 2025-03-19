@@ -10,8 +10,6 @@ on:
 
 jobs:
   deploy-to-hf:
-    # permissions:
-    #   pull-requests: write
     runs-on: ubuntu-latest
 
     steps:
@@ -35,24 +33,12 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-
       - name: Install dependencies
         run: |
           echo "Python version:"
           python --version
 
           pip install -r requirements.txt
-          
-          # Install from requirements.txt if available
-          # if [ -f requirements.txt ]; then
-          #   echo "Installing from requirements.txt"
-          #   pip install -r requirements.txt
-          # fi
-          # Optionally install the package using pyproject.toml if needed
-          # if [ -f pyproject.toml ]; then
-          #   echo "Installing package via pyproject.toml"
-          #   pip install .
-          # fi
 
       - name: Install Hugging Face CLI
         run: pip install huggingface_hub
@@ -62,23 +48,16 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      # - name: Clone Hugging Face Space
-      #   run: huggingface-cli repo clone \
-      #         YOUR_HF_USERNAME/SPACE_NAME \
-      #         --token "${{ secrets.HF_READ_WRITE_TOKEN }}" \
-      #         --branch main \
-      #         hf-space
-
       - name: Clone Hugging Face Space repository
         run: |
-          git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
-
+          git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
 
       - name: Copy repository files to HF Space
         run: |
-          # Remove the .git folder so we can reinitialize a clean git repository
+          # Remove the .git folder from the cloned HF Space repository
           rm -rf hf-space/.git
-          cp -R . hf-space
+          # Use rsync to copy all files except the hf-space directory to avoid copying the clone into itself
+          rsync -av --exclude='hf-space' ./ hf-space/
 
       - name: Commit and push to Hugging Face
         run: |
