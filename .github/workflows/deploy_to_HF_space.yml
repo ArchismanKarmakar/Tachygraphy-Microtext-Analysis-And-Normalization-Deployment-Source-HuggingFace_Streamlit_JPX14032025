@@ -28,6 +28,9 @@ jobs:
           sudo apt-get update
           sudo xargs -a packages.txt apt-get install -y
 
+      - name: Upgrade pip
+        run: pip install --upgrade pip
+
 
       - name: Install dependencies
         run: |
