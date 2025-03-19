@@ -31,7 +31,7 @@ jobs:
 
       - name: Rename Poetry files to ingore
         run: |
-          mv pyproj.toml pyproject.toml.ignore
+          mv pyproject.toml pyproject.toml.ignore
           mv poetry.lock poetry.lock.ignore
 
       - name: Upgrade pip
