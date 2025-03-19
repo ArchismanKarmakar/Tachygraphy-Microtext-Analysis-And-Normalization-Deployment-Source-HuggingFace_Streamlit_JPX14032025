@@ -13,73 +13,201 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository with LFS support
+      - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          lfs: true
 
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.12"
-
-      - name: Environment Setup & Install system packages from packages.txt
-        run: |
-          sudo add-apt-repository universe
-          sudo apt-get update
-          sudo xargs -a packages.txt apt-get install -y
-
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
-          echo "Python version:"
-          python --version
+          python -m pip install --upgrade pip
 
-          pip install -r requirements.txt
-
-      - name: Install Hugging Face CLI
-        run: pip install huggingface_hub
+          pip install poetry
+          poetry install
+          
+          # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Configure Git
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Clone Hugging Face Space repository
+      - name: Push to Hugging Face Space
+        env:
+          HF_READ_WRITE_TOKEN: ${{ secrets.HF_READ_WRITE_TOKEN }}
         run: |
-          git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
+          git remote add space https://huggingface.co/spaces/YOUR_HF_USERNAME/SPACE_NAME
+          git push --force https://HF_USERNAME:${{ secrets.HF_READ_WRITE_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
 
-      - name: Copy repository files to HF Space
-        run: |
-          # Remove the .git folder from the cloned HF Space repository
-          rm -rf hf-space/.git
-          # Use rsync to copy all files except the hf-space directory to avoid copying the clone into itself
-          rsync -av --exclude='hf-space' ./ hf-space/
 
-      # - name: Commit and push to Hugging Face
-      #   run: |
-      #     cd hf-space
-      #     git init
-      #     git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
-      #     git checkout -b main
-      #     git add .
-      #     git commit -m "Update deployment via GitHub Actions"
-      #     git push -f origin main
-      #     echo "Deployment to Hugging Face Spaces completed!"
 
-      - name: Commit and push to Hugging Face
-        run: |
-          cd hf-space
-          git init
-          # Remove existing origin if it exists
-          git remote remove origin || true
-          git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
-          git checkout -b main
-          git add .
-          git commit -m "Update deployment via GitHub Actions"
-          git push -f origin main
-          echo "Deployment to Hugging Face Spaces completed!"
+
+# name: Deploy to Hugging Face Spaces
+# permissions:
+#   contents: write  # Adjusted to allow pushing changes
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   deploy-to-hf:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Check out repository with LFS support
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           lfs: true
+
+#       - name: Set up Python 3.12
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.12"
+
+#       - name: Environment Setup & Install system packages from packages.txt
+#         run: |
+#           sudo add-apt-repository universe
+#           sudo apt-get update
+#           sudo xargs -a packages.txt apt-get install -y
+
+#       - name: Upgrade pip
+#         run: python -m pip install --upgrade pip
+
+#       - name: Install dependencies
+#         run: |
+#           echo "Python version:"
+#           python --version
+#           pip install -r requirements.txt
+
+#       - name: Install Hugging Face CLI
+#         run: pip install huggingface_hub
+
+#       - name: Configure Git
+#         run: |
+#           git config --global user.email "actions@github.com"
+#           git config --global user.name "GitHub Actions"
+
+#       - name: Clone Hugging Face Space repository
+#         run: |
+#           git clone https://HF_USERNAME:${{ secrets.HF_READ_WRITE_TOKEN }}@huggingface.co/spaces/tachygraphy-microtext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
+
+#       - name: Copy repository files to HF Space
+#         run: |
+#           # Use rsync to copy all files except the hf-space directory to avoid copying the clone into itself
+#           rsync -av --exclude='hf-space' ./ hf-space/
+
+#       - name: Commit and push to Hugging Face
+#         run: |
+#           cd hf-space
+#           # Initialize Git repository if .git doesn't exist
+#           if [ ! -d ".git" ]; then
+#             git init
+#             git remote add origin https://huggingface.co/spaces/tachygraphy-microtext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+#           fi
+#           # Check if 'main' branch exists
+#           if git show-ref --verify --quiet refs/heads/main; then
+#             git checkout main
+#           else
+#             git checkout -b main
+#           fi
+#           git add .
+#           git commit -m "Update deployment via GitHub Actions"
+#           git push -f origin main
+#           echo "Deployment to Hugging Face Spaces completed!"
+
+
+
+# name: Deploy to Hugging Face Spaces
+# permissions:
+#   contents: read
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   deploy-to-hf:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Check out repository with LFS support
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           lfs: true
+
+#       - name: Set up Python 3.12
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.12"
+
+#       - name: Environment Setup & Install system packages from packages.txt
+#         run: |
+#           sudo add-apt-repository universe
+#           sudo apt-get update
+#           sudo xargs -a packages.txt apt-get install -y
+
+#       - name: Upgrade pip
+#         run: python -m pip install --upgrade pip
+
+#       - name: Install dependencies
+#         run: |
+#           echo "Python version:"
+#           python --version
+
+#           pip install -r requirements.txt
+
+#       - name: Install Hugging Face CLI
+#         run: pip install huggingface_hub
+
+#       - name: Configure Git
+#         run: |
+#           git config --global user.email "actions@github.com"
+#           git config --global user.name "GitHub Actions"
+
+#       - name: Clone Hugging Face Space repository
+#         run: |
+#           git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
+
+#       - name: Copy repository files to HF Space
+#         run: |
+#           # Remove the .git folder from the cloned HF Space repository
+#           rm -rf hf-space/.git
+#           # Use rsync to copy all files except the hf-space directory to avoid copying the clone into itself
+#           rsync -av --exclude='hf-space' ./ hf-space/
+
+#       # - name: Commit and push to Hugging Face
+#       #   run: |
+#       #     cd hf-space
+#       #     git init
+#       #     git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+#       #     git checkout -b main
+#       #     git add .
+#       #     git commit -m "Update deployment via GitHub Actions"
+#       #     git push -f origin main
+#       #     echo "Deployment to Hugging Face Spaces completed!"
+
+#       - name: Commit and push to Hugging Face
+#         run: |
+#           cd hf-space
+#           git init
+#           # Remove existing origin if it exists
+#           git remote remove origin || true
+#           git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+#           git checkout -b main
+#           git add .
+#           git commit -m "Update deployment via GitHub Actions"
+#           git push -f origin main
+#           echo "Deployment to Hugging Face Spaces completed!"
 
