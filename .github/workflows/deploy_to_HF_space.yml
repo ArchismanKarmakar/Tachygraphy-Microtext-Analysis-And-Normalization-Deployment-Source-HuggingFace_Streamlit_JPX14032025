@@ -18,6 +18,12 @@ jobs:
         with:
           fetch-depth: 0
 
+
+          
+      # USE THIS IF YOU WANT TO AVOID DOCKER #
+
+
+
       # - name: Set up Python
       #   uses: actions/setup-python@v4
       #   with:
@@ -29,7 +35,6 @@ jobs:
       #     sudo apt-get update
       #     sudo xargs -a packages.txt apt-get install -y
 
-      # USE THIS IF YOU WANT TO AVOID DOCKER
 
       # - name: Rename Poetry files to ingore
       #   run: |
