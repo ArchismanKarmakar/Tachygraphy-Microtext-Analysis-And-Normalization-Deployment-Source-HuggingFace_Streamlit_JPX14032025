@@ -19,6 +19,9 @@ COPY requirements.txt .
 # Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+# Check Installed Packages
+RUN pip list
+
 # Copy the rest of your app's code
 COPY . .
 
