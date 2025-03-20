@@ -24,7 +24,8 @@ jobs:
       - name: Log in to Hugging Face Docker registry
         env:
           HF_READ_WRITE_TOKEN: ${{ secrets.HF_READ_WRITE_TOKEN }}
-        run: echo "${{ secrets.HF_READ_WRITE_TOKEN }}" | docker login --username ${{ secrets.HF_USERNAME }} --password-stdin huggingface.co
+        run: echo "${{ secrets.HF_READ_WRITE_TOKEN }}" | docker login --username ${{ secrets.HF_USERNAME }} --password-stdin docker.io
+
 
       - name: Build the Docker image
         run: docker build -t huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder .
