@@ -18,56 +18,49 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
-          
-      # USE THIS IF YOU WANT TO AVOID DOCKER #
-
-
-
-      # - name: Set up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.12'
-
-      # - name: Environment Setup & Install system packages from packages.txt
-      #   run: |
-      #     sudo add-apt-repository universe
-      #     sudo apt-get update
-      #     sudo xargs -a packages.txt apt-get install -y
-
+      - name: Environment Setup & Install system packages from packages.txt
+        run: |
+          sudo add-apt-repository universe
+          sudo apt-get update
+          sudo xargs -a packages.txt apt-get install -y
 
       # - name: Rename Poetry files to ingore
       #   run: |
       #     mv pyproject.toml pyproject.toml.ignore
       #     mv poetry.lock poetry.lock.ignore
 
-      # - name: Upgrade pip
-      #   run: python -m pip install --upgrade pip
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      # - name: Install & configure Poetry
-      #   run: |
-      #     # - name: Disable Poetry virtualenv creation
-      #     curl -sSL https://install.python-poetry.org | python3 -
-      #     echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install & configure Poetry
+        run: |
+          # - name: Disable Poetry virtualenv creation
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
           
-      #     # pip install --upgrade poetry --upgrade-strategy eager
-      #     poetry config virtualenvs.create false
-      #     poetry --version
-      #     poetry add poetry-plugin-export
-      #     poetry self add poetry-plugin-export
+          # pip install --upgrade poetry --upgrade-strategy eager
+          poetry config virtualenvs.create false
+          poetry --version
+          poetry add poetry-plugin-export
+          poetry self add poetry-plugin-export
 
 
-      # - name: Install dependencies
-      #   run: |
-      #     # pip install poetry
-      #     # pip install --upgrade poetry --upgrade-strategy eager
-      #     poetry --version
-      #     # poetry install --no-root
-      #     poetry export -f requirements.txt --without-hashes --output requirements.txt
+      - name: Install dependencies
+        run: |
+          # pip install poetry
+          # pip install --upgrade poetry --upgrade-strategy eager
+          poetry --version
+          # poetry install --no-root
+          poetry export -f requirements.txt --without-hashes --output requirements.txt
 
-      #     pip install -r requirements.txt
+          pip install -r requirements.txt
           
-      #     # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       # - name: Rename Poetry files to original
       #   run: |
