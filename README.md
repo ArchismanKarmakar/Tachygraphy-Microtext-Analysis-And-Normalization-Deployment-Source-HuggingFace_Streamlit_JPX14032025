@@ -1,8 +1,8 @@
 ---
 title: Tachygraphy Microtext Analysis And Normalization
 emoji: 💻
-colorFrom: purple
-colorTo: gray
+colorFrom: orange
+colorTo: red
 sdk: streamlit
 sdk_version: 1.43.2
 python_version: "3.12"

@@ -11,15 +11,15 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 def free_memory():
     #  """Free up CPU & GPU memory before loading a new model."""
-    global current_model, current_tokenizer
+    # global current_model, current_tokenizer
 
-    if current_model is not None:
-        del current_model  # Delete the existing model
-        current_model = None  # Reset reference
+    # if current_model is not None:
+    #     del current_model  # Delete the existing model
+    #     current_model = None  # Reset reference
 
-    if current_tokenizer is not None:
-        del current_tokenizer  # Delete the tokenizer
-        current_tokenizer = None
+    # if current_tokenizer is not None:
+    #     del current_tokenizer  # Delete the tokenizer
+    #     current_tokenizer = None
 
     gc.collect()  # Force garbage collection for CPU memory
 
@@ -91,7 +91,9 @@ def show_dashboard():
              - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
              - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
              - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtrext-norm-org)
-             - Deployment: [Streamlit + Hugging Face @ GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
+             - Deployment Source: [GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
+             - Streamlit Deployemnt: [Streamlit](https://tachygraphy-microtext.streamlit.app/)
+             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
              """)
 
     create_footer()

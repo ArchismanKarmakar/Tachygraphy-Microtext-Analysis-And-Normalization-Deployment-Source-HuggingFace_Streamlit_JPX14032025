@@ -39,8 +39,8 @@ import importlib.util
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 
-from emotion_analysis import show_emotion_analysis
-from sentiment_analysis.sentiment_analysis_main import show_sentiment_analysis
+from emotionMoodtag_analysis.emotion_analysis_main import show_emotion_analysis
+from sentimentPolarity_analysis.sentiment_analysis_main import show_sentiment_analysis
 from dashboard import show_dashboard
 
 
@@ -54,15 +54,15 @@ st.set_page_config(
 
 def free_memory():
     #  """Free up CPU & GPU memory before loading a new model."""
-    global current_model, current_tokenizer
+    # global current_model, current_tokenizer
 
-    if current_model is not None:
-        del current_model  # Delete the existing model
-        current_model = None  # Reset reference
+    # if current_model is not None:
+    #     del current_model  # Delete the existing model
+    #     current_model = None  # Reset reference
 
-    if current_tokenizer is not None:
-        del current_tokenizer  # Delete the tokenizer
-        current_tokenizer = None
+    # if current_tokenizer is not None:
+    #     del current_tokenizer  # Delete the tokenizer
+    #     current_tokenizer = None
 
     gc.collect()  # Force garbage collection for CPU memory
 
@@ -149,19 +149,19 @@ def main():
 
     if selection == "Dashboard":
         st.cache_resource.clear()
-        # free_memory()
+        free_memory()
         show_dashboard()
 
     elif selection == "Stage 1: Sentiment Polarity Analysis":
         st.cache_resource.clear()
-        # free_memory()
+        free_memory()
         show_sentiment_analysis()
 
     elif selection == "Stage 2: Emotion Mood-tag Analysis":
         st.cache_resource.clear()
-        # free_memory()
-        # show_emotion_analysis()
-        st.write("This section is under development.")
+        free_memory()
+        show_emotion_analysis()
+        # st.write("This section is under development.")
 
     elif selection == "Stage 3: Text Transformation & Normalization":
         st.cache_resource.clear()

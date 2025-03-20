@@ -11,7 +11,7 @@ import joblib
 
 import torch
 import torch.nn as nn
-import torch.functional as F
+import torch.nn.functional as F
 from transformers import DebertaV2Model, DebertaV2Tokenizer
 import safetensors
 # from safetensors import load_file, save_file
@@ -78,7 +78,7 @@ class SentimentModel(nn.Module):
     @classmethod
     @st.cache_resource
     def load_pretrained(cls, model_path_or_repo):
-        """Loads and caches the model (RoBERTa + SentimentModel) only when called."""
+        # """Loads and caches the model (RoBERTa + SentimentModel) only when called."""
         print(f"Loading model from {model_path_or_repo}...")
 
         model_config_path = hf_hub_download(model_path_or_repo, "config.json")
