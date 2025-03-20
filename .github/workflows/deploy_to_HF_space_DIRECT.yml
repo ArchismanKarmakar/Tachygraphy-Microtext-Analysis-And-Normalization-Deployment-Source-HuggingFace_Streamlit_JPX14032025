@@ -54,7 +54,7 @@ jobs:
         run: |
           # pip install poetry
           # pip install --upgrade poetry --upgrade-strategy eager
-          poetry --version
+          # poetry --version
           # poetry install --no-root
           poetry export -f requirements.txt --without-hashes --output requirements.txt
 
