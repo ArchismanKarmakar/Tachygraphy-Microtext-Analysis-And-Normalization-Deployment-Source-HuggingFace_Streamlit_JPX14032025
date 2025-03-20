@@ -202,6 +202,16 @@ if "disabled" not in st.session_state:
 
 # Enabling Resource caching
 def show_emotion_analysis():
+
+    model_names = list(MODEL_OPTIONS.keys())
+
+    # Check if the stored selected model is valid; if not, reset it
+    if "selected_model" in st.session_state:
+        if st.session_state.selected_model not in model_names:
+            st.session_state.selected_model = model_names[0]
+    else:
+        st.session_state.selected_model = model_names[0]
+
     st.title("Stage 2: Emotion Mood-tag Analysis")
     st.write("This section handles emotion mood-tag analysis.")
 

@@ -41,6 +41,7 @@ import importlib.util
 
 from emotionMoodtag_analysis.emotion_analysis_main import show_emotion_analysis
 from sentimentPolarity_analysis.sentiment_analysis_main import show_sentiment_analysis
+from transformation_and_Normalization.transformationNormalization_main import transform_and_normalize
 from dashboard import show_dashboard
 
 
@@ -89,6 +90,10 @@ def free_memory():
 
 
 def main():
+
+    if "current_page" not in st.session_state:
+        st.session_state.current_page = None
+
     # selection = option_menu(
     #     menu_title="Navigation",
     #     options=[
@@ -147,27 +152,34 @@ def main():
     #     # show_text_transformation()
     #     st.write("This section is under development.")
 
-    if selection == "Dashboard":
+
+
+    if st.session_state.current_page != selection:
         st.cache_resource.clear()
         free_memory()
+        st.session_state.current_page = selection
+
+    if selection == "Dashboard":
+        # st.cache_resource.clear()
+        # free_memory()
         show_dashboard()
 
     elif selection == "Stage 1: Sentiment Polarity Analysis":
-        st.cache_resource.clear()
-        free_memory()
+        # st.cache_resource.clear()
+        # free_memory()
         show_sentiment_analysis()
 
     elif selection == "Stage 2: Emotion Mood-tag Analysis":
-        st.cache_resource.clear()
-        free_memory()
+        # st.cache_resource.clear()
+        # free_memory()
         show_emotion_analysis()
         # st.write("This section is under development.")
 
     elif selection == "Stage 3: Text Transformation & Normalization":
-        st.cache_resource.clear()
+        # st.cache_resource.clear()
         # free_memory()
-        # show_text_transformation()
-        st.write("This section is under development.")
+        transform_and_normalize()
+        # st.write("This section is under development.")
 
 
 

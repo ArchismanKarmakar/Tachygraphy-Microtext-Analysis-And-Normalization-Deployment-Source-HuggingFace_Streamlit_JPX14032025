@@ -1,0 +1,17 @@
+{
+    "1": {
+        "name": "Facebook BART Base for Conditional Text Generation",
+        "type": "hf_automodel_finetuned_fbtctg",
+        "module_path": "hmv_cfg_base_stage3.model1",
+        "hf_location": "tachygraphy-microtrext-norm-org/BART-base-HF-Seq2Seq-Trainer-Batch4",
+        "tokenizer_class": "BartTokenizer",
+        "model_class": "BartForConditionalGeneration",
+        "problem_type": "text_transformamtion_and_normalization",
+        "base_model": "facebook/bart-base",
+        "base_model_class": "BartForConditionalGeneration",
+        "device": "cpu",
+        "max_top_k": 50265,
+        "load_function": "load_model",
+        "predict_function": "predict"
+    }
+}
