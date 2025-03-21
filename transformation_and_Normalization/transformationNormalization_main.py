@@ -332,7 +332,7 @@ def transform_and_normalize():
         
         progress_bar = st.progress(0)
         update_progress(progress_bar, 0, 10)
-        with st.spinner("Predicting..."):
+        with st.spinner("Please wait, don'n change the text data or any input parameters or switch models or pages while we are loading inference..."):
             model, tokenizer, predict_func = load_selected_model(selected_model)
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             if model is None:
