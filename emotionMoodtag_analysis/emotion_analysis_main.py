@@ -217,12 +217,12 @@ def show_emotion_analysis():
 
     # Model selection with change detection
     selected_model = st.selectbox(
-        "Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model", on_change=on_model_change
+        "Choose a model:", list(MODEL_OPTIONS.keys()), key="selected_model_stage2", on_change=on_model_change
     )
 
     # Text input with change detection
     user_input = st.text_input(
-        "Enter text for emotions mood-tag analysis:", key="user_input", on_change=on_text_change
+        "Enter text for emotions mood-tag analysis:", key="user_input_stage2", on_change=on_text_change
     )
     user_input_copy = user_input
 

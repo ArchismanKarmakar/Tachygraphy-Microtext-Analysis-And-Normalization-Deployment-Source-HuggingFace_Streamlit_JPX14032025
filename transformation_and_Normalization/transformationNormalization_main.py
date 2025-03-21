@@ -224,6 +224,12 @@ def transform_and_normalize():
     # No cache clearing here—only in the model change callback!
 
     # st.write(st.session_state)
+
+    if "last_change" not in st.session_state:
+        st.session_state.last_change = time.time()
+    if "auto_predict_triggered" not in st.session_state:
+        st.session_state.auto_predict_triggered = False
+
     
     if "top_k" not in st.session_state:
         st.session_state.top_k = 50
@@ -242,12 +248,12 @@ def transform_and_normalize():
 
     # Model selection with change detection; clearing cache happens in on_model_change()
     selected_model = st.selectbox(
-        "Choose a model:", model_names, key="selected_model", on_change=on_model_change
+        "Choose a model:", model_names, key="selected_model_stage3", on_change=on_model_change
     )
 
     # Text input with change detection
     user_input = st.text_input(
-        "Enter text for emotions mood-tag analysis:", key="user_input", on_change=on_text_change
+        "Enter text for emotions mood-tag analysis:", key="user_input_stage3", on_change=on_text_change
     )
 
     st.markdown("#### Generation Parameters")
@@ -321,7 +327,7 @@ def transform_and_normalize():
         user_input_copy = user_input
 
     current_time = time.time()
-    if user_input.strip() and (current_time - st.session_state.last_change >= 1.5):
+    if user_input.strip() and (current_time - st.session_state.last_change >= 1.25):
         st.session_state.last_processed_input = user_input
         
         progress_bar = st.progress(0)
@@ -348,11 +354,11 @@ def transform_and_normalize():
         update_progress(progress_bar, 10, 100)
         
         if len(predictions) > 1:
-            st.write("### Multiple Predictions:")
+            st.write("### Predictions:")
             for i, pred in enumerate(predictions, start=1):
-                st.markdown(f"**Sequence {i}:** {pred}")
+                st.markdown(f"**Prediction Sequence {i}:** {pred}")
         else:
-            st.write("### Prediction:")
+            st.write("### Predicted Sequence:")
             st.write(predictions[0])
         progress_bar.empty()
     # else:

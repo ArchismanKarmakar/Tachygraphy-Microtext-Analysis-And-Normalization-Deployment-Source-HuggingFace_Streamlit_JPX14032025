@@ -31,6 +31,12 @@ else:
     except RuntimeError:
         asyncio.set_event_loop(asyncio.new_event_loop())
 
+st.set_page_config(
+    # page_title="Tachygraphy Microtext Analysis & Normalization",
+    layout="wide"
+)
+
+
 
 import joblib
 import importlib
@@ -47,10 +53,6 @@ from dashboard import show_dashboard
 
 # from text_transformation import show_text_transformation
 
-st.set_page_config(
-    page_title="Tachygraphy Microtext Analysis & Normalization",
-    # layout="wide"
-)
 
 
 def free_memory():
@@ -112,10 +114,21 @@ def main():
 
     st.sidebar.title("Navigation")
     with st.sidebar:
+
+        # selected = option_menu("Main Menu", ["Home", 'Settings'], 
+        #         icons=['house', 'gear'], menu_icon="cast", default_index=1)
+        # selected
+
+        # # 2. horizontal menu
+        # selected2 = option_menu(None, ["Home", "Upload", "Tasks", 'Settings'], 
+        #     icons=['house', 'cloud-upload', "list-task", 'gear'], 
+        #     menu_icon="cast", default_index=0, orientation="horizontal")
+        # selected2
+
         selection = option_menu(
             menu_title=None,          # No title for a sleek look
             options=["Dashboard", "Stage 1: Sentiment Polarity Analysis", "Stage 2: Emotion Mood-tag Analysis", "Stage 3: Text Transformation & Normalization"],
-            icons=None,
+            icons=['house', 'diagram-3', "snow", 'activity'],
             menu_icon="cast",          # Main menu icon
             default_index=0,           # Highlight the first option
             orientation="vertical",
@@ -126,11 +139,11 @@ def main():
                     "font-size": "16px",
                     "text-align": "left",
                     "margin": "0px",
-                    "color": "#6c757d",
+                    "color": "#000000",
                     "transition": "0.3s",
                 },
                 "nav-link-selected": {
-                    "background-color": "#FF4B4B",
+                    "background-color": "#020045",
                     "color": "white",
                     "font-weight": "bold",
                     "border-radius": "8px",
@@ -160,22 +173,26 @@ def main():
         st.session_state.current_page = selection
 
     if selection == "Dashboard":
+        # st.title("Tachygraphy Micro-text Analysis & Normalization")
         # st.cache_resource.clear()
         # free_memory()
         show_dashboard()
 
     elif selection == "Stage 1: Sentiment Polarity Analysis":
+        # st.title("Sentiment Polarity Analysis")
         # st.cache_resource.clear()
         # free_memory()
         show_sentiment_analysis()
 
     elif selection == "Stage 2: Emotion Mood-tag Analysis":
+        # st.title("Emotion Mood-tag Analysis")
         # st.cache_resource.clear()
         # free_memory()
         show_emotion_analysis()
         # st.write("This section is under development.")
 
     elif selection == "Stage 3: Text Transformation & Normalization":
+        # st.title("Text Transformation & Normalization")
         # st.cache_resource.clear()
         # free_memory()
         transform_and_normalize()

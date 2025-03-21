@@ -1,4 +1,4 @@
-from transformers import BartForConditionalGeneration, BartTokenizer, AutoTokenizer, AutoModelForSequenceClassification, AutoModel
+from transformers import T5Tokenizer, T5ForConditionalGeneration, AutoTokenizer, AutoModelForSequenceClassification, AutoModel
 import torch.nn.functional as F
 from imports import *
 import torch.nn as nn
@@ -13,24 +13,24 @@ CONFIG_STAGE3 = os.path.join(BASE_DIR, "..", "config", "stage3_models.json")
 
 
 MODEL_OPTIONS = {
-    "1": {
-        "name": "Facebook BART Base for Conditional Text Generation",
-        "type": "hf_automodel_finetuned_fbtctg",
-        "module_path": "hmv_cfg_base_stage3.model1",
-        "hf_location": "tachygraphy-microtrext-norm-org/BART-base-HF-Seq2Seq-Trainer-Batch4",
-        "tokenizer_class": "BartTokenizer",
-        "model_class": "BartForConditionalGeneration",
+    "3": {
+        "name": "Google T5 v1.1 Base for Conditional Text Generation",
+        "type": "hf_automodel_finetuned_gt5tctg",
+        "module_path": "hmv_cfg_base_stage3.model3",
+        "hf_location": "tachygraphy-microtrext-norm-org/T5-1.1-HF-seq2seq-Trainer-Batch4",
+        "tokenizer_class": "T5Tokenizer",
+        "model_class": "T5ForConditionalGeneration",
         "problem_type": "text_transformamtion_and_normalization",
-        "base_model": "facebook/bart-base",
-        "base_model_class": "BartForConditionalGeneration",
+        "base_model": "google/t5-v1_1-base",
+        "base_model_class": "T5ForConditionalGeneration",
         "device": "cpu",
-        "max_top_k": 50265,
+        "max_top_k": 32128,
         "load_function": "load_model",
         "predict_function": "predict"
     }
 }
 
-model_key = "1"
+model_key = "3"
 model_info = MODEL_OPTIONS[model_key]
 hf_location = model_info["hf_location"]
 
@@ -41,12 +41,12 @@ model_class = globals()[model_info["model_class"]]
 @st.cache_resource
 def load_model():
     tokenizer = tokenizer_class.from_pretrained(hf_location)
-    print("Loading model 1")
+    print("Loading model 3")
     model = model_class.from_pretrained(hf_location,
-                                        device_map=torch.device(
-                                            "cuda" if torch.cuda.is_available() else "cpu")
+                                        # device_map=torch.device(
+                                        #     "cuda" if torch.cuda.is_available() else "cpu")
                                         )
-    print("Model 1 loaded")
+    print("Model 3 loaded")
 
     return model, tokenizer
 
