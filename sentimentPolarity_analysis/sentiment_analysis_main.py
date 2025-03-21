@@ -288,35 +288,41 @@ def show_sentiment_analysis():
         # st.write(f"**NEUTRAL:** {binary_predictions[1]}")
         # st.write(f"**POSITIVE:** {binary_predictions[2]}")
 
-        # 1️⃣ **Polar Plot (Plotly)**
-        sentiment_polarities = predictions_array.tolist()
-        fig_polar = px.line_polar(
-            pd.DataFrame(dict(r=sentiment_polarities,
-                         theta=SENTIMENT_POLARITY_LABELS)),
-            r='r', theta='theta', line_close=True
-        )
-        st.plotly_chart(fig_polar)
+        col1, col2 = st.columns(2)
 
-        # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
+        sentiment_polarities = predictions_array.tolist()
+
+        with col1:
+        # 1️⃣ **Polar Plot (Plotly)**
+            fig_polar = px.line_polar(
+                pd.DataFrame(dict(r=sentiment_polarities,
+                            theta=SENTIMENT_POLARITY_LABELS)),
+                r='r', theta='theta', line_close=True
+            )
+            st.plotly_chart(fig_polar)
+
         normalized_predictions = predictions_array / predictions_array.sum()
 
-        fig, ax = plt.subplots(figsize=(8, 2))
-        left = 0
-        for i in range(len(normalized_predictions)):
-            ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(
-                i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
-            left += normalized_predictions[i]
+        with col2:
+        # 2️⃣ **Normalized Horizontal Bar Chart (Matplotlib)**
 
-        # Configure the chart
-        ax.set_xlim(0, 1)
-        ax.set_yticks([])
-        ax.set_xticks(np.arange(0, 1.1, 0.1))
-        ax.legend(loc='upper center', bbox_to_anchor=(
-            0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
-        plt.title("Sentiment Polarity Prediction Distribution")
+            fig, ax = plt.subplots(figsize=(8, 2))
+            left = 0
+            for i in range(len(normalized_predictions)):
+                ax.barh(0, normalized_predictions[i], color=plt.cm.tab10(
+                    i), left=left, label=SENTIMENT_POLARITY_LABELS[i])
+                left += normalized_predictions[i]
 
-        # Display in Streamlit
-        st.pyplot(fig)
+            # Configure the chart
+            ax.set_xlim(0, 1)
+            ax.set_yticks([])
+            ax.set_xticks(np.arange(0, 1.1, 0.1))
+            ax.legend(loc='upper center', bbox_to_anchor=(
+                0.5, -0.15), ncol=len(SENTIMENT_POLARITY_LABELS))
+            plt.title("Sentiment Polarity Prediction Distribution")
+
+            # Display in Streamlit
+            st.pyplot(fig)
 
         progress_bar.empty()
 
