@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 # from streamlit_extras.bottom_container import bottom
@@ -32,7 +33,7 @@ else:
         asyncio.set_event_loop(asyncio.new_event_loop())
 
 st.set_page_config(
-    # page_title="Tachygraphy Microtext Analysis & Normalization",
+    page_title="Tachygraphy Microtext Analysis & Normalization",
     layout="wide"
 )
 
@@ -91,7 +92,17 @@ def free_memory():
 
 
 
+if "last_run" not in st.session_state:
+    st.session_state.last_run = time.time()
+
 def main():
+
+    if "last_run" not in st.session_state:
+        st.session_state.last_run = time.time()
+
+    if time.time() - st.session_state.last_run > 3600:
+        st.session_state.clear()
+        st.experimental_rerun()
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = None
