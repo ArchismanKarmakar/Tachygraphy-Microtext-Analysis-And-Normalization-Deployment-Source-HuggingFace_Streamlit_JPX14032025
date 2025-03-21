@@ -42,7 +42,7 @@ model_class = globals()[model_info["model_class"]]
 def load_model():
     tokenizer = tokenizer_class.from_pretrained(hf_location)
     print("Loading model 3")
-    model = model_class.from_pretrained(hf_location,
+    model = model_class.from_pretrained(hf_location, use_safetensors=True,
                                         # device_map=torch.device(
                                         #     "cuda" if torch.cuda.is_available() else "cpu")
                                         )
