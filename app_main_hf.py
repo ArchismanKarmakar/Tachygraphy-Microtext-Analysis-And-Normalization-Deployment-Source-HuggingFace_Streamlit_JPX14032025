@@ -102,7 +102,7 @@ def main():
 
     if time.time() - st.session_state.last_run > 3600:
         st.session_state.clear()
-        st.experimental_rerun()
+        st.rerun()
 
     if "current_page" not in st.session_state:
         st.session_state.current_page = None
