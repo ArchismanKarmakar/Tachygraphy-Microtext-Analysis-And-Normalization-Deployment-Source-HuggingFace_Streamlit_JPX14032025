@@ -25,7 +25,7 @@ MODEL_OPTIONS = {
         "name": "DeBERTa v3 Base Custom Model with minimal Regularized Loss",
         "type": "db3_base_custom",
         "module_path": "hmv_cfg_base_stage2.model2",
-        "hf_location": "tachygraphy-microtrext-norm-org/DeBERTa-v3-Base-Cust-LV2-EmotionMoodtags-minRegLoss",
+        "hf_location": "tachygraphy-microtext-normalization-iemk/DeBERTa-v3-Base-Cust-LV2-EmotionMoodtags-minRegLoss",
         "tokenizer_class": "DebertaV2Tokenizer",
         "model_class": "EmotionModel",
         "problem_type": "regression",

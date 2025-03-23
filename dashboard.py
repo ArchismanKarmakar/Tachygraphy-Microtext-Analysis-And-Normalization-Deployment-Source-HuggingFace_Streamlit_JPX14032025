@@ -90,10 +90,10 @@ def show_dashboard():
     st.write("""
              - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
              - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
-             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtrext-norm-org)
+             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtext-normalization-iemk)
              - Deployment Source: [GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
              - Streamlit Deployemnt: [Streamlit](https://tachygraphy-microtext.streamlit.app/)
-             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
+             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
              """)
 
     create_footer()

@@ -19,7 +19,7 @@ MODEL_OPTIONS = {
         "name": "DeBERTa v3 Base for Sequence Classification",
         "type": "hf_automodel_finetuned_dbt3",
         "module_path": "hmv_cfg_base_stage1.model1",
-        "hf_location": "tachygraphy-microtrext-norm-org/DeBERTa-v3-seqClassfication-LV1-SentimentPolarities-Batch8",
+        "hf_location": "tachygraphy-microtext-normalization-iemk/DeBERTa-v3-seqClassfication-LV1-SentimentPolarities-Batch8",
         "tokenizer_class": "DebertaV2Tokenizer",
         "model_class": "DebertaV2ForSequenceClassification",
         "problem_type": "multi_label_classification",

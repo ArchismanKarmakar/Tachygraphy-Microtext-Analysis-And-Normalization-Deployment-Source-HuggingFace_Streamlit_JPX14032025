@@ -17,7 +17,7 @@ MODEL_OPTIONS = {
         "name": "Google T5 v1.1 Base for Conditional Text Generation",
         "type": "hf_automodel_finetuned_gt5tctg",
         "module_path": "hmv_cfg_base_stage3.model3",
-        "hf_location": "tachygraphy-microtrext-norm-org/T5-1.1-HF-seq2seq-Trainer-Batch4",
+        "hf_location": "tachygraphy-microtext-normalization-iemk/T5-1.1-HF-seq2seq-Trainer-Batch4",
         "tokenizer_class": "T5Tokenizer",
         "model_class": "T5ForConditionalGeneration",
         "problem_type": "text_transformamtion_and_normalization",

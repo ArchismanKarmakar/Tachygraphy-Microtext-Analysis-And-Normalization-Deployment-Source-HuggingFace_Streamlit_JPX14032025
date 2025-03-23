@@ -28,7 +28,7 @@ jobs:
 
 
       - name: Build the Docker image
-        run: docker build -t huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder .
+        run: docker build -t huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder .
 
       - name: Push the Docker image to Hugging Face
-        run: docker push huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+        run: docker push huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder

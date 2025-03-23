@@ -76,8 +76,8 @@ jobs:
         env:
           HF_READ_WRITE_TOKEN: ${{ secrets.HF_READ_WRITE_TOKEN }}
         run: |
-          git remote add space https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
-          git push --force https://${{ secrets.HF_USERNAME }}:${{ secrets.HF_READ_WRITE_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+          git remote add space https://huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+          git push --force https://${{ secrets.HF_USERNAME }}:${{ secrets.HF_READ_WRITE_TOKEN }}@huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
         
 
 
@@ -214,7 +214,7 @@ jobs:
 
 #       - name: Clone Hugging Face Space repository
 #         run: |
-#           git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
+#           git clone https://HF_USERNAME:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder hf-space
 
 #       - name: Copy repository files to HF Space
 #         run: |
@@ -227,7 +227,7 @@ jobs:
 #       #   run: |
 #       #     cd hf-space
 #       #     git init
-#       #     git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+#       #     git remote add origin https://huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
 #       #     git checkout -b main
 #       #     git add .
 #       #     git commit -m "Update deployment via GitHub Actions"
@@ -240,7 +240,7 @@ jobs:
 #           git init
 #           # Remove existing origin if it exists
 #           git remote remove origin || true
-#           git remote add origin https://huggingface.co/spaces/tachygraphy-microtrext-norm-org/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
+#           git remote add origin https://huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder
 #           git checkout -b main
 #           git add .
 #           git commit -m "Update deployment via GitHub Actions"

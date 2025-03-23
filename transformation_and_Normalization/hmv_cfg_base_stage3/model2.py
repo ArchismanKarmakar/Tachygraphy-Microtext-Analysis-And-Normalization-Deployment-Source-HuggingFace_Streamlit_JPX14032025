@@ -17,7 +17,7 @@ MODEL_OPTIONS = {
         "name": "Microsoft Prophet Net Uncased Large for Conditional Text Generation",
         "type": "hf_automodel_finetuned_mstctg",
         "module_path": "hmv_cfg_base_stage3.model2",
-        "hf_location": "tachygraphy-microtrext-norm-org/ProphetNet_ForCondGen_Uncased_Large_HFTSeq2Seq_Batch4_ngram3",
+        "hf_location": "tachygraphy-microtext-normalization-iemk/ProphetNet_ForCondGen_Uncased_Large_HFTSeq2Seq_Batch4_ngram3",
         "tokenizer_class": "ProphetNetTokenizer",
         "model_class": "ProphetNetForConditionalGeneration",
         "problem_type": "text_transformamtion_and_normalization",

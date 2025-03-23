@@ -17,7 +17,7 @@ MODEL_OPTIONS = {
         "name": "Facebook BART Base for Conditional Text Generation",
         "type": "hf_automodel_finetuned_fbtctg",
         "module_path": "hmv_cfg_base_stage3.model1",
-        "hf_location": "tachygraphy-microtrext-norm-org/BART-base-HF-Seq2Seq-Trainer-Batch4",
+        "hf_location": "tachygraphy-microtext-normalization-iemk/BART-base-HF-Seq2Seq-Trainer-Batch4",
         "tokenizer_class": "BartTokenizer",
         "model_class": "BartForConditionalGeneration",
         "problem_type": "text_transformamtion_and_normalization",

@@ -29,7 +29,7 @@ MODEL_OPTIONS = {
         "name": "BERT Base Uncased Custom Model",
         "type": "bert_base_uncased_custom",
         "module_path": "hmv_cfg_base_stage1.model3",
-        "hf_location": "https://huggingface.co/tachygraphy-microtrext-norm-org/BERT-LV1-SentimentPolarities/resolve/main/saved_weights.pt",
+        "hf_location": "https://huggingface.co/tachygraphy-microtext-normalization-iemk/BERT-LV1-SentimentPolarities/resolve/main/saved_weights.pt",
         "tokenizer_class": "AutoTokenizer",
         "model_class": "BERT_architecture",
         "problem_type": "multi_label_classification",
