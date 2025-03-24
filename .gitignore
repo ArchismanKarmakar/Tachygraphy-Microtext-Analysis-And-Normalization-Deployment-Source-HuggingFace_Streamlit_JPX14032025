@@ -15,3 +15,8 @@ venv/
 # Ignore Poetry and Pip related files
 # poetry.lock
 # pip-log.txt
+
+# Ignore environment variable files
+.env
+.env.*
+
