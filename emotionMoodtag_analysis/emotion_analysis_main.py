@@ -251,34 +251,43 @@ def show_emotion_analysis():
 
         # model, tokenizer = load_model()
         # model, tokenizer = load_selected_model(selected_model)
-        with st.spinner("Please wait..."):
-            model, tokenizer, predict_func = load_selected_model(selected_model)
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-            if model is None:
-                st.error(
-                    "⚠️ Error: Model failed to load! Check model selection or configuration.")
-                st.stop()
+        col_spinner, col_warning = st.columns(2)
+        with col_warning:
+            warning_placeholder = st.empty()
+            warning_placeholder.warning("Don't change the text data or any input parameters or switch models or pages while inference is loading...")
 
-            # model.to(device)
-            if hasattr(model, "to"):
-                model.to(device)
+        with col_spinner:
+            with st.spinner("Please wait, inference is loading..."):
+                model, tokenizer, predict_func = load_selected_model(selected_model)
+                device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-            # predictions = predict(user_input, model, tokenizer, device)
+                if model is None:
+                    st.error(
+                        "⚠️ Error: Model failed to load! Check model selection or configuration.")
+                    st.stop()
 
-            predictions = predict_func(user_input, model, tokenizer, device)
-            print(predictions)
+                # model.to(device)
+                if hasattr(model, "to"):
+                    model.to(device)
 
-            # Squeeze predictions to remove extra dimensions
-            predictions_array = predictions.squeeze()
+                # predictions = predict(user_input, model, tokenizer, device)
 
-            # Convert to binary predictions (argmax)
-            binary_predictions = np.zeros_like(predictions_array)
-            max_indices = np.argmax(predictions_array)
-            binary_predictions[max_indices] = 1
+                predictions = predict_func(user_input, model, tokenizer, device)
+                print(predictions)
+
+                # Squeeze predictions to remove extra dimensions
+                predictions_array = predictions.squeeze()
+
+                # Convert to binary predictions (argmax)
+                binary_predictions = np.zeros_like(predictions_array)
+                max_indices = np.argmax(predictions_array)
+                binary_predictions[max_indices] = 1
 
             # Update progress bar for prediction and model loading
-            update_progress(progress_bar, 10, 100)
+        update_progress(progress_bar, 10, 100)
+
+        warning_placeholder.empty()
 
         # Display raw predictions
         st.write(f"**Predicted Emotion Scores:** {predictions_array}")

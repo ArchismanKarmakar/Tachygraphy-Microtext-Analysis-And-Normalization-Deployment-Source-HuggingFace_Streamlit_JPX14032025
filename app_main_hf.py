@@ -179,6 +179,7 @@ def main():
 
 
     if st.session_state.current_page != selection:
+        st.cache_data.clear()
         st.cache_resource.clear()
         free_memory()
         st.session_state.current_page = selection
