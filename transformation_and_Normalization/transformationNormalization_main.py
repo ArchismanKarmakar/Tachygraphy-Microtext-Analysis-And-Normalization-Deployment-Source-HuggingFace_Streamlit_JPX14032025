@@ -11,7 +11,7 @@ import time
 import uuid
 
 from dotenv import load_dotenv
-import psycopg2
+# import psycopg2
 from supabase import create_client, Client
 from datetime import datetime, timezone
 
