@@ -43,7 +43,7 @@ current_tokenizer = None
 # Enabling Resource caching
 
 # Load environment variables from .env
-# load_dotenv()
+load_dotenv()
 
 # @st.cache_resource
 # DATABASE_URL = os.environ.get("DATABASE_URL")
@@ -183,6 +183,17 @@ def enable_ui():
     )
 
 # Function to increment progress dynamically
+
+def get_env_variable(var_name):
+    # Try os.environ first (this covers local development and HF Spaces)
+    value = os.environ.get(var_name)
+    if value is None:
+        # Fall back to st.secrets if available (e.g., on Streamlit Cloud)
+        try:
+            value = st.secrets[var_name]
+        except KeyError:
+            value = None
+    return value
 
 
 def update_progress(progress_bar, start, end, delay=0.1):
@@ -514,12 +525,12 @@ def transform_and_normalize():
                     # print("anon_key:", os.environ.get("anon_key"))
                     # print("table3_name:", os.environ.get("table3_name"))
                     # load_dotenv(dotenv_path=env_path)
-                    load_dotenv()
+                    # load_dotenv()
                     # supabase: Client = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("anon_key"))
                     # response = supabase.table(os.environ.get("table3_name")).insert(data_to_insert, returning="minimal").execute()
                     try:
-                        supabase: Client = create_client(os.environ.get("SUPABASE_DB_TACHYGRAPHY_DB_URL"), os.environ.get("SUPABASE_DB_TACHYGRAPHY_ANON_API_KEY"))
-                        response = supabase.table("SUPABASE_DB_TACHYGRAPHY_DB_STAGE3_TABLE").insert(data_to_insert, returning="minimal").execute()
+                        supabase: Client = create_client(get_env_variable("SUPABASE_DB_TACHYGRAPHY_DB_URL"), get_env_variable("SUPABASE_DB_TACHYGRAPHY_ANON_API_KEY"))
+                        response = supabase.table(get_env_variable("SUPABASE_DB_TACHYGRAPHY_DB_STAGE3_TABLE")).insert(data_to_insert, returning="minimal").execute()
                         st.success("Feedback submitted successfully!")
                         st.session_state.feedback_submitted = True
                     except Exception as e:
