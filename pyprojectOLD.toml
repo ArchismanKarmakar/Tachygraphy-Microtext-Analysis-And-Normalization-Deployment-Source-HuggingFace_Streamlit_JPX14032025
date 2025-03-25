@@ -1,6 +1,7 @@
 [project]
 name = "tachygraphy-microtext-analysis-and-normalization"
-version = "2025.03.22.post1"
+version = "2025.03.24.post1"
+# version = "2025.03.22.post1"
 # version = "2025.03.21.post1"
 # version = "2025.03.18.post5"
 # version = "2025.03.18.post4_3"

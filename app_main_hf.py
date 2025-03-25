@@ -50,6 +50,8 @@ from emotionMoodtag_analysis.emotion_analysis_main import show_emotion_analysis
 from sentimentPolarity_analysis.sentiment_analysis_main import show_sentiment_analysis
 from transformation_and_Normalization.transformationNormalization_main import transform_and_normalize
 from dashboard import show_dashboard
+from stacked_stacking_stages.stacking_stages import show_stacking_stages
+from data_collection_form.data_collector import show_data_collector
 
 
 # from text_transformation import show_text_transformation
@@ -138,8 +140,8 @@ def main():
 
         selection = option_menu(
             menu_title=None,          # No title for a sleek look
-            options=["Dashboard", "Stage 1: Sentiment Polarity Analysis", "Stage 2: Emotion Mood-tag Analysis", "Stage 3: Text Transformation & Normalization"],
-            icons=['house', 'diagram-3', "snow", 'activity'],
+            options=["Dashboard", "Stage 1: Sentiment Polarity Analysis", "Stage 2: Emotion Mood-tag Analysis", "Stage 3: Text Transformation & Normalization", "Stacked Stages", "Data Correction & Collection"],
+            icons=['house', 'diagram-3', "snow", 'activity', 'collection', 'database-up'],
             menu_icon="cast",          # Main menu icon
             default_index=0,           # Highlight the first option
             orientation="vertical",
@@ -209,6 +211,18 @@ def main():
         # free_memory()
         transform_and_normalize()
         # st.write("This section is under development.")
+
+    elif selection == "Stacked Stages":
+        # st.title("Stacked Stages")
+        # st.cache_resource.clear()
+        # free_memory()
+        show_stacking_stages()
+    
+    elif selection == "Data Correction & Collection":
+        # st.title("Data Correction & Collection")
+        # st.cache_resource.clear()
+        # free_memory()
+        show_data_collector()
 
 
 

@@ -44,8 +44,102 @@ def free_memory():
         print(f"❌ Cache cleanup error: {e}")
 
 
+def create_sample_example1():
+    st.write("""
+        ## Sample Example 1
+        """)
+    graph = """
+    digraph {
+        // Global graph settings with explicit DPI
+        graph [bgcolor="white", rankdir=TB, splines=true, nodesep=0.8, ranksep=0.8];
+        node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
+
+        // Define nodes with custom colors
+        Input [label="Input:\nbruh, floods in Kerala, rescue ops non-stop 🚁", fillcolor="#ffe6de", fontcolor="#000000"];
+        Output [label="Output:\nBrother, the floods in Kerala are severe,\nand rescue operations are ongoing continuously.", fillcolor="#ffe6de", fontcolor="#000000"];
+        Sentiment [label="Sentiment:\nNEUTRAL", fillcolor="#ecdeff", fontcolor="black"];
+
+        // Emotion nodes with a uniform style
+        Anger [label="Anger: 0.080178231", fillcolor="#deffe1", fontcolor="black"];
+        Disgust [label="Disgust: 0.015257259", fillcolor="#deffe1", fontcolor="black"];
+        Fear [label="Fear: 0.601871967", fillcolor="#deffe1", fontcolor="black"];
+        Joy [label="Joy: 0.00410547", fillcolor="#deffe1", fontcolor="black"];
+        NeutralE [label="Neutral: 0.0341026", fillcolor="#deffe1", fontcolor="black"];
+        Sadness [label="Sadness: 0.245294735", fillcolor="#deffe1", fontcolor="black"];
+        Surprise [label="Surprise: 0.019189769", fillcolor="#deffe1", fontcolor="black"];
+
+        // Define edges with a consistent style
+        edge [color="#7a7a7a", penwidth=3];
+
+        // Establish the tree structure
+        Input -> Output;
+        Input -> Sentiment;
+        Sentiment -> Anger;
+        Sentiment -> Disgust;
+        Sentiment -> Fear;
+        Sentiment -> Joy;
+        Sentiment -> NeutralE;
+        Sentiment -> Sadness;
+        Sentiment -> Surprise;
+    }
+    """
+    st.graphviz_chart(graph)
+
+
+def create_sample_example2():
+    st.write("""
+        ## Sample Example 2
+        """)
+    graph = """
+    digraph {
+        // Global graph settings
+        graph [bgcolor="white", rankdir=TB, splines=true, nodesep=0.8, ranksep=0.8];
+        node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
+
+        // Define nodes with custom colors
+        Input [label="Input:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
+        Output [label="Output:\nyou really think all that talk makes you tough lol when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
+        Sentiment [label="Sentiment:\nNEGATIVE", fillcolor="#ecdeff", fontcolor="black"];
+
+        // Emotion nodes with a uniform style
+        Anger [label="Anger: 0.14403291", fillcolor="#deffe1", fontcolor="black"];
+        Disgust [label="Disgust: 0.039282672", fillcolor="#deffe1", fontcolor="black"];
+        Fear [label="Fear: 0.014349542", fillcolor="#deffe1", fontcolor="black"];
+        Joy [label="Joy: 0.048965044", fillcolor="#deffe1", fontcolor="black"];
+        NeutralE [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
+        Sadness [label="Sadness: 0.021111647", fillcolor="#deffe1", fontcolor="black"];
+        Surprise [label="Surprise: 0.237405464", fillcolor="#deffe1", fontcolor="black"];
+
+        // Define edges with a consistent style
+        edge [color="#7a7a7a", penwidth=3];
+
+        // Establish the tree structure
+        Input -> Output;
+        Input -> Sentiment;
+        Sentiment -> Anger;
+        Sentiment -> Disgust;
+        Sentiment -> Fear;
+        Sentiment -> Joy;
+        Sentiment -> NeutralE;
+        Sentiment -> Sadness;
+        Sentiment -> Surprise;
+    }
+    """
+    st.graphviz_chart(graph)
+
+
+def create_project_overview():
+    # st.divider()
+    st.markdown("## Project Overview")
+    st.write(f"""
+        Tachygraphy—originally developed to expedite writing—has evolved over centuries. In the 1990s, it reappeared as micro-text, driving faster communication on social media with characteristics like 'Anytime, Anyplace, Anybody, and Anything (4A)'. This project focuses on the analysis and normalization of micro-text, which is a prevalent form of informal communication today. It aims to enhance Natural Language Processing (NLP) tasks by standardizing micro-text for better sentiment analysis, emotion analysis, data extraction and normalization to understandable form aka. 4A message decoding as primary objective.
+        """
+             )
+
+
 def create_footer():
-    st.divider()
+    # st.divider()
+    st.markdown("## About Us")
 
     # 🛠️ Layout using Streamlit columns
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -90,13 +184,19 @@ def show_dashboard():
     st.write("""
              - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
              - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
-             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/tachygraphy-microtext-normalization-iemk)
+             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/Tachygraphy-Microtext-Normalization-IEMK25)
              - Deployment Source: [GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
              - Streamlit Deployemnt: [Streamlit](https://tachygraphy-microtext.streamlit.app/)
-             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/tachygraphy-microtext-normalization-iemk/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
+             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/Tachygraphy-Microtext-Normalization-IEMK25/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
              """)
 
     create_footer()
+
+    create_project_overview()
+
+    create_sample_example1()
+
+    # create_sample_example2()
 
 
 def __main__():
