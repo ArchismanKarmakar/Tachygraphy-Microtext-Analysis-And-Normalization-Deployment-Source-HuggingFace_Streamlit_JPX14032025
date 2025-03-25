@@ -592,15 +592,15 @@ def show_stacking_stages():
     col1, col2, col3 = st.columns(3)
     with col1:
         selected_model1 = st.selectbox(
-            "Choose a model:", model_names1, key="selected_model_stage1", on_change=on_model_change
+            "Choose a sentiment polarity prediction model:", model_names1, key="selected_model_stage1", on_change=on_model_change
         )
     with col2:
         selected_model2 = st.selectbox(
-            "Choose a model:", model_names2, key="selected_model_stage2", on_change=on_model_change
+            "Choose a emotion mood-tag prediction model:", model_names2, key="selected_model_stage2", on_change=on_model_change
         )
     with col3:
         selected_model3 = st.selectbox(
-            "Choose a model:", model_names3, key="selected_model_stage3", on_change=on_model_change
+            "Choose a transformation & normalization model:", model_names3, key="selected_model_stage3", on_change=on_model_change
         )
 
     # Text input with change detection
