@@ -44,9 +44,9 @@ def free_memory():
         print(f"❌ Cache cleanup error: {e}")
 
 
-def create_sample_example1():
+def create_sample_example3():
     st.write("""
-        #### Sample Example 1
+        #### Sample Example 3
         """)
     graph = """
     digraph {
@@ -130,6 +130,52 @@ def create_sample_example2():
     st.graphviz_chart(graph)
 
 
+def create_sample_example1():
+    st.write("#### Sample Example 1")
+
+    graph = """
+    digraph {
+        // Global graph settings
+        graph [bgcolor="white", rankdir=TB, splines=true, nodesep=0.8, ranksep=0.8];
+        node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
+
+        // Define nodes with custom colors
+        Input [label="Input:\\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
+        Output [label="Output:\\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
+        Sentiment [label="Sentiment:\\nNEGATIVE", fillcolor="#ecdeff", fontcolor="black"];
+
+        // Add the Emotion node
+        Emotion [label="Emotion", fillcolor="#ecdeff", fontcolor="black"];
+
+        // Emotion nodes with a uniform style
+        Anger [label="Anger: 0.14403291", fillcolor="#deffe1", fontcolor="black"];
+        Disgust [label="Disgust: 0.039282672", fillcolor="#deffe1", fontcolor="black"];
+        Fear [label="Fear: 0.014349542", fillcolor="#deffe1", fontcolor="black"];
+        Joy [label="Joy: 0.048965044", fillcolor="#deffe1", fontcolor="black"];
+        Neutral [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
+        Sadness [label="Sadness: 0.021111647", fillcolor="#deffe1", fontcolor="black"];
+        Surprise [label="Surprise: 0.237405464", fillcolor="#deffe1", fontcolor="black"];
+
+        // Define edges with a consistent style
+        edge [color="#7a7a7a", penwidth=3];
+
+        // Establish the tree structure
+        Input -> Output;
+        Input -> Sentiment;
+        Sentiment -> Emotion;
+        Emotion -> Anger;
+        Emotion -> Disgust;
+        Emotion -> Fear;
+        Emotion -> Joy;
+        Emotion -> Neutral;
+        Emotion -> Sadness;
+        Emotion -> Surprise;
+    }
+    """
+
+    st.graphviz_chart(graph)
+
+
 def create_project_overview():
     # st.divider()
     st.markdown("## Project Overview")
@@ -200,9 +246,11 @@ def show_dashboard():
 
     create_project_overview()
 
+
     create_sample_example1()
 
     create_sample_example2()
+    create_sample_example3()
 
 
 def __main__():
