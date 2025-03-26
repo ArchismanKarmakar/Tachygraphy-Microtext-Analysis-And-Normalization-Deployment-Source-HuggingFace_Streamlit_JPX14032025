@@ -130,9 +130,7 @@ def create_sample_example2():
     st.graphviz_chart(graph)
 
 
-import streamlit as st
-
-def create_sample_example():
+def create_sample_example1():
     st.write("#### Sample Example")
 
     graph = """
