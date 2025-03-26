@@ -51,12 +51,12 @@ def create_sample_example3():
     graph = """
     digraph {
         // Global graph settings with explicit DPI
-        graph [bgcolor="white", rankdir=TB, splines=true, nodesep=0.8, ranksep=0.8];
+        graph [bgcolor="white", rankdir=LR, splines=true, nodesep=0.8, ranksep=0.8];
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with custom colors
-        Input Text [label="Input Text:\nbruh, floods in Kerala, rescue ops non-stop 🚁", fillcolor="#ffe6de", fontcolor="#000000"];
-        Normalized Text [label="Normalized Text:\nBrother, the floods in Kerala are severe,\nand rescue operations are ongoing continuously.", fillcolor="#ffe6de", fontcolor="#000000"];
+        "Input Text" [label="Input Text:\nbruh, floods in Kerala, rescue ops non-stop 🚁", fillcolor="#ffe6de", fontcolor="#000000"];
+        "Normalized Text" [label="Normalized Text:\nBrother, the floods in Kerala are severe,\nand rescue operations are ongoing continuously.", fillcolor="#ffe6de", fontcolor="#000000"];
         Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
         Negative [label="Negative: 4.4367719965521246e-05", fillcolor="#e8e6ff", fontcolor="black"];
         Neutral [label="Neutral: 0.9998886585235596", fillcolor="#e8e6ff", fontcolor="black"];
@@ -75,15 +75,17 @@ def create_sample_example3():
         // edge [color="#7a7a7a", penwidth=3];
 
         // Define edges
-        Input Text -> Normalized Text;
-        Input Text -> Sentiment";
+        "Input Text" -> Sentiment;
+        "Input Text" -> "Normalized Text";
         Sentiment -> Negative;
         Sentiment -> Neutral;
         Sentiment -> Positive;
 
-        Neagtive -> Emotion;
+        Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
+        Sentiment -> Emotion;
+        "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
         Emotion -> Fear;
@@ -107,8 +109,8 @@ def create_sample_example2():
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with custom colors
-        Input Text [label="Input Text:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
-        Normalized Text [label="Normalized Text:\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
+        "Input Text" [label="Input Text:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
+        "Normalized Text" [label="Normalized Text:\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
         Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
         Negative [label="Negative: 0.9999861717224121", fillcolor="#e8e6ff", fontcolor="black"];
         Neutral [label="Neutral: 6.885089078423334e-06", fillcolor="#e8e6ff", fontcolor="black"];
@@ -127,15 +129,17 @@ def create_sample_example2():
         // edge [color="#7a7a7a", penwidth=3];
 
         // Define edges
-        Input Text -> Normalized Text;
-        Input Text -> Sentiment";
+        "Input Text" -> Sentiment;
+        "Input Text" -> "Normalized Text";
         Sentiment -> Negative;
         Sentiment -> Neutral;
         Sentiment -> Positive;
 
-        Neagtive -> Emotion;
+        Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
+        Sentiment -> Emotion;
+        "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
         Emotion -> Fear;
@@ -153,15 +157,15 @@ def create_sample_example1():
 
     graph = """
     digraph G {
-        rankdir=LR;
+        rankdir=TD;
         bgcolor="white";
         nodesep=0.8;
         ranksep=0.8;
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with colors
-        Input Text [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
-        Normalized Text [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
+        "Input Text" [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
+        "Normalized Text" [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
         Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
         Negative [label="Negative: 0.995874803543091", fillcolor="#e8e6ff", fontcolor="black"];
         Neutral [label="Neutral: 6.232635259628296e-05", fillcolor="#e8e6ff", fontcolor="black"];
@@ -177,15 +181,17 @@ def create_sample_example1():
         Surprise [label="Surprise: 0.02158345977962017", fillcolor="#deffe1", fontcolor="black"];
 
         // Define edges
-        Input Text -> Normalized Text;
-        Input Text -> Sentiment";
+        "Input Text" -> Sentiment;
+        "Input Text" -> "Normalized Text";
         Sentiment -> Negative;
         Sentiment -> Neutral;
         Sentiment -> Positive;
 
-        Neagtive -> Emotion;
+        Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
+        Sentiment -> Emotion;
+        "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
         Emotion -> Fear;
