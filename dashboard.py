@@ -131,7 +131,7 @@ def create_sample_example2():
 
 
 def create_sample_example1():
-    st.write("#### Sample Example")
+    st.write("#### Sample Example 1")
 
     graph = """
     digraph G {
