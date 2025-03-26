@@ -130,50 +130,56 @@ def create_sample_example2():
     st.graphviz_chart(graph)
 
 
-def create_sample_example1():
-    st.write("#### Sample Example 1")
+import streamlit as st
+
+def create_sample_example():
+    st.write("#### Sample Example")
 
     graph = """
-    digraph {
-        // Global graph settings
-        graph [bgcolor="white", rankdir=TB, splines=true, nodesep=0.8, ranksep=0.8];
+    digraph G {
+        rankdir=LR;
+        bgcolor="white";
+        nodesep=0.8;
+        ranksep=0.8;
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
-        // Define nodes with custom colors
-        Input [label="Input:\\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
-        Output [label="Output:\\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
-        Sentiment [label="Sentiment:\\nNEGATIVE", fillcolor="#ecdeff", fontcolor="black"];
+        // Define nodes with colors
+        "Input Text" [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
+        "Normalized Text" [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
+        "Sentiment" [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
+        "negative" [label="negative: 0.995874803543091", fillcolor="#e8e6ff", fontcolor="black"];
+        "neutral" [label="neutral: 6.232635259628296e-05", fillcolor="#e8e6ff", fontcolor="black"];
+        "positive" [label="positive: 2.0964847564697266e-05", fillcolor="#e8e6ff", fontcolor="black"];
 
-        // Add the Emotion node
-        Emotion [label="Emotion", fillcolor="#ecdeff", fontcolor="black"];
+        "Emotion" [label="Emotion", fillcolor="#fdf5e6", fontcolor="black"];
+        "anger" [label="anger: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        "disgust" [label="disgust: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        "fear" [label="fear: 0.010283803842246056", fillcolor="#deffe1", fontcolor="black"];
+        "joy" [label="joy: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        "neutral_e" [label="neutral: 0.021935827255129814", fillcolor="#deffe1", fontcolor="black"];
+        "sadness" [label="sadness: 1.0", fillcolor="#deffe1", fontcolor="black"];
+        "surprise" [label="surprise: 0.02158345977962017", fillcolor="#deffe1", fontcolor="black"];
 
-        // Emotion nodes with a uniform style
-        Anger [label="Anger: 0.14403291", fillcolor="#deffe1", fontcolor="black"];
-        Disgust [label="Disgust: 0.039282672", fillcolor="#deffe1", fontcolor="black"];
-        Fear [label="Fear: 0.014349542", fillcolor="#deffe1", fontcolor="black"];
-        Joy [label="Joy: 0.048965044", fillcolor="#deffe1", fontcolor="black"];
-        Neutral [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
-        Sadness [label="Sadness: 0.021111647", fillcolor="#deffe1", fontcolor="black"];
-        Surprise [label="Surprise: 0.237405464", fillcolor="#deffe1", fontcolor="black"];
+        // Define edges
+        "Input Text" -> "Normalized Text";
+        "Normalized Text" -> "Sentiment";
+        "Sentiment" -> "negative";
+        "Sentiment" -> "neutral";
+        "Sentiment" -> "positive";
 
-        // Define edges with a consistent style
-        edge [color="#7a7a7a", penwidth=3];
-
-        // Establish the tree structure
-        Input -> Output;
-        Input -> Sentiment;
-        Sentiment -> Emotion;
-        Emotion -> Anger;
-        Emotion -> Disgust;
-        Emotion -> Fear;
-        Emotion -> Joy;
-        Emotion -> Neutral;
-        Emotion -> Sadness;
-        Emotion -> Surprise;
+        "Normalized Text" -> "Emotion";
+        "Emotion" -> "anger";
+        "Emotion" -> "disgust";
+        "Emotion" -> "fear";
+        "Emotion" -> "joy";
+        "Emotion" -> "neutral_e";
+        "Emotion" -> "sadness";
+        "Emotion" -> "surprise";
     }
     """
 
     st.graphviz_chart(graph)
+
 
 
 def create_project_overview():
