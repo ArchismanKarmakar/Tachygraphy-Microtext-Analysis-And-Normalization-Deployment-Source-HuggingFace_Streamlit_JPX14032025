@@ -55,31 +55,40 @@ def create_sample_example3():
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with custom colors
-        Input [label="Input:\nbruh, floods in Kerala, rescue ops non-stop 🚁", fillcolor="#ffe6de", fontcolor="#000000"];
-        Output [label="Output:\nBrother, the floods in Kerala are severe,\nand rescue operations are ongoing continuously.", fillcolor="#ffe6de", fontcolor="#000000"];
-        Sentiment [label="Sentiment:\nNEUTRAL", fillcolor="#ecdeff", fontcolor="black"];
+        Input Text [label="Input Text:\nbruh, floods in Kerala, rescue ops non-stop 🚁", fillcolor="#ffe6de", fontcolor="#000000"];
+        Normalized Text [label="Normalized Text:\nBrother, the floods in Kerala are severe,\nand rescue operations are ongoing continuously.", fillcolor="#ffe6de", fontcolor="#000000"];
+        Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
+        Negative [label="Negative: 4.4367719965521246e-05", fillcolor="#e8e6ff", fontcolor="black"];
+        Neutral [label="Neutral: 0.9998886585235596", fillcolor="#e8e6ff", fontcolor="black"];
+        Positive [label="Positive: 7.097498746588826e-05", fillcolor="#e8e6ff", fontcolor="black"];
 
         // Emotion nodes with a uniform style
         Anger [label="Anger: 0.080178231", fillcolor="#deffe1", fontcolor="black"];
         Disgust [label="Disgust: 0.015257259", fillcolor="#deffe1", fontcolor="black"];
         Fear [label="Fear: 0.601871967", fillcolor="#deffe1", fontcolor="black"];
         Joy [label="Joy: 0.00410547", fillcolor="#deffe1", fontcolor="black"];
-        Neutral [label="Neutral: 0.0341026", fillcolor="#deffe1", fontcolor="black"];
+        Neutral_e [label="Neutral: 0.0341026", fillcolor="#deffe1", fontcolor="black"];
         Sadness [label="Sadness: 0.245294735", fillcolor="#deffe1", fontcolor="black"];
         Surprise [label="Surprise: 0.019189769", fillcolor="#deffe1", fontcolor="black"];
 
         // Define edges with a consistent style
-        edge [color="#7a7a7a", penwidth=3];
+        // edge [color="#7a7a7a", penwidth=3];
 
-        // Establish the tree structure
-        Input -> Output;
-        Input -> Sentiment;
-        Sentiment -> Emotion
+        // Define edges
+        Input Text -> Normalized Text;
+        Input Text -> Sentiment";
+        Sentiment -> Negative;
+        Sentiment -> Neutral;
+        Sentiment -> Positive;
+
+        Neagtive -> Emotion;
+        Positive -> Emotion [penwidth=0.2];
+        Neutral -> Emotion [penwidth=0.2];
         Emotion -> Anger;
         Emotion -> Disgust;
         Emotion -> Fear;
         Emotion -> Joy;
-        Emotion -> Neutral;
+        Emotion -> Neutral_e;
         Emotion -> Sadness;
         Emotion -> Surprise;
     }
@@ -98,31 +107,40 @@ def create_sample_example2():
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with custom colors
-        Input [label="Input:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
-        Output [label="Output:\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
-        Sentiment [label="Sentiment:\nNEGATIVE", fillcolor="#ecdeff", fontcolor="black"];
+        Input Text [label="Input Text:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
+        Normalized Text [label="Normalized Text:\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
+        Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
+        Negative [label="Negative: 0.9999861717224121", fillcolor="#e8e6ff", fontcolor="black"];
+        Neutral [label="Neutral: 6.885089078423334e-06", fillcolor="#e8e6ff", fontcolor="black"];
+        Positive [label="Positive: 1.1117132999061141e-05", fillcolor="#e8e6ff", fontcolor="black"];
 
         // Emotion nodes with a uniform style
         Anger [label="Anger: 0.14403291", fillcolor="#deffe1", fontcolor="black"];
         Disgust [label="Disgust: 0.039282672", fillcolor="#deffe1", fontcolor="black"];
         Fear [label="Fear: 0.014349542", fillcolor="#deffe1", fontcolor="black"];
         Joy [label="Joy: 0.048965044", fillcolor="#deffe1", fontcolor="black"];
-        Neutral [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
+        Neutral_e [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
         Sadness [label="Sadness: 0.021111647", fillcolor="#deffe1", fontcolor="black"];
         Surprise [label="Surprise: 0.237405464", fillcolor="#deffe1", fontcolor="black"];
 
         // Define edges with a consistent style
-        edge [color="#7a7a7a", penwidth=3];
+        // edge [color="#7a7a7a", penwidth=3];
 
-        // Establish the tree structure
-        Input -> Output;
-        Input -> Sentiment;
-        Sentiment -> Emotion
+        // Define edges
+        Input Text -> Normalized Text;
+        Input Text -> Sentiment";
+        Sentiment -> Negative;
+        Sentiment -> Neutral;
+        Sentiment -> Positive;
+
+        Neagtive -> Emotion;
+        Positive -> Emotion [penwidth=0.2];
+        Neutral -> Emotion [penwidth=0.2];
         Emotion -> Anger;
         Emotion -> Disgust;
         Emotion -> Fear;
         Emotion -> Joy;
-        Emotion -> Neutral;
+        Emotion -> Neutral_e;
         Emotion -> Sadness;
         Emotion -> Surprise;
     }
@@ -142,39 +160,39 @@ def create_sample_example1():
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with colors
-        "Input Text" [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
-        "Normalized Text" [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
-        "Sentiment" [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
-        "negative" [label="negative: 0.995874803543091", fillcolor="#e8e6ff", fontcolor="black"];
-        "neutral" [label="neutral: 6.232635259628296e-05", fillcolor="#e8e6ff", fontcolor="black"];
-        "positive" [label="positive: 2.0964847564697266e-05", fillcolor="#e8e6ff", fontcolor="black"];
+        Input Text [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
+        Normalized Text [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
+        Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
+        Negative [label="Negative: 0.995874803543091", fillcolor="#e8e6ff", fontcolor="black"];
+        Neutral [label="Neutral: 6.232635259628296e-05", fillcolor="#e8e6ff", fontcolor="black"];
+        Positive [label="Positive: 2.0964847564697266e-05", fillcolor="#e8e6ff", fontcolor="black"];
 
-        "Emotion" [label="Emotion", fillcolor="#fdf5e6", fontcolor="black"];
-        "anger" [label="anger: 0.0", fillcolor="#deffe1", fontcolor="black"];
-        "disgust" [label="disgust: 0.0", fillcolor="#deffe1", fontcolor="black"];
-        "fear" [label="fear: 0.010283803842246056", fillcolor="#deffe1", fontcolor="black"];
-        "joy" [label="joy: 0.0", fillcolor="#deffe1", fontcolor="black"];
-        "neutral_e" [label="neutral: 0.021935827255129814", fillcolor="#deffe1", fontcolor="black"];
-        "sadness" [label="sadness: 1.0", fillcolor="#deffe1", fontcolor="black"];
-        "surprise" [label="surprise: 0.02158345977962017", fillcolor="#deffe1", fontcolor="black"];
+        Emotion [label="Emotion", fillcolor="#fdf5e6", fontcolor="black"];
+        Anger [label="Anger: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        Disgust [label="Disgust: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        Fear [label="Fear: 0.010283803842246056", fillcolor="#deffe1", fontcolor="black"];
+        Joy [label="Joy: 0.0", fillcolor="#deffe1", fontcolor="black"];
+        Neutral_e [label="Neutral: 0.021935827255129814", fillcolor="#deffe1", fontcolor="black"];
+        Sadness [label="Sadness: 1.0", fillcolor="#deffe1", fontcolor="black"];
+        Surprise [label="Surprise: 0.02158345977962017", fillcolor="#deffe1", fontcolor="black"];
 
         // Define edges
-        "Input Text" -> "Normalized Text";
-        "Input Text" -> "Sentiment";
-        "Sentiment" -> "negative";
-        "Sentiment" -> "neutral";
-        "Sentiment" -> "positive";
+        Input Text -> Normalized Text;
+        Input Text -> Sentiment";
+        Sentiment -> Negative;
+        Sentiment -> Neutral;
+        Sentiment -> Positive;
 
-        "neagtive" -> "Emotion";
-        "positive" -> "Emotion" [penwidth=0.2];
-        "neutral" -> "Emotion" [penwidth=0.2];
-        "Emotion" -> "anger";
-        "Emotion" -> "disgust";
-        "Emotion" -> "fear";
-        "Emotion" -> "joy";
-        "Emotion" -> "neutral_e";
-        "Emotion" -> "sadness";
-        "Emotion" -> "surprise";
+        Neagtive -> Emotion;
+        Positive -> Emotion [penwidth=0.2];
+        Neutral -> Emotion [penwidth=0.2];
+        Emotion -> Anger;
+        Emotion -> Disgust;
+        Emotion -> Fear;
+        Emotion -> Joy;
+        Emotion -> Neutral_e;
+        Emotion -> Sadness;
+        Emotion -> Surprise;
     }
     """
 
