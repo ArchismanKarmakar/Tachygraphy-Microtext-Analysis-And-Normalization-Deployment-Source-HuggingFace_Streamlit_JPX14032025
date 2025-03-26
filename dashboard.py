@@ -164,7 +164,7 @@ def create_sample_example1():
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9, margin="0.15,0.1"];
 
         // Define nodes with colors
-        "Input Text" [label="Input Text:\ni don't know for real y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
+        "Input Text" [label="Input Text:\ni don't know fr y he's sooo sad", fillcolor="#ffe6de", fontcolor="black"];
         "Normalized Text" [label="Normalized Text:\ni do not know for real why he's so sad", fillcolor="#e6f4d7", fontcolor="black"];
         Sentiment [label="Sentiment", fillcolor="#fde6ff", fontcolor="black"];
         Negative [label="Negative: 0.995874803543091", fillcolor="#e8e6ff", fontcolor="black"];
