@@ -84,7 +84,7 @@ def create_sample_example3():
         Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
-        Sentiment -> Emotion;
+        // Sentiment -> Emotion;
         "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
@@ -138,7 +138,7 @@ def create_sample_example2():
         Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
-        Sentiment -> Emotion;
+        // Sentiment -> Emotion;
         "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
@@ -190,7 +190,7 @@ def create_sample_example1():
         Negative -> Emotion;
         Positive -> Emotion [penwidth=0.2];
         Neutral -> Emotion [penwidth=0.2];
-        Sentiment -> Emotion;
+        // Sentiment -> Emotion;
         "Input Text" -> Emotion;
         Emotion -> Anger;
         Emotion -> Disgust;
