@@ -351,7 +351,7 @@ def transform_and_normalize():
 
     # Text input with change detection
     user_input = st.text_input(
-        "Enter text for emotions mood-tag analysis:", key="user_input_stage3", on_change=on_text_change
+        "Enter text for normalization:", key="user_input_stage3", on_change=on_text_change
     )
 
     if st.session_state.get("last_processed_input", "") != user_input:

@@ -250,7 +250,7 @@ def show_data_collector():
         col1, col2 = st.columns(2)
         with col1:
             feedback = st.text_input(
-                "Enter the correct expanded standard formal English text:",
+                "Enter the correct / actual expanded standard formal English text:",
                 key="feedback_input"
             )
         with col2:
@@ -260,11 +260,11 @@ def show_data_collector():
             )
 
         st.warning(
-        "The correct slider is for the probability of actual label and wrong slider is the probability predicted by any model which is wrong for that label.")
+        "The correct slider is for the actual probability of the label and wrong slider is the predicted probability by any model which is wrong for that label.")
 
 
             
-        st.write("#### Sentiment Polarity Feedback (Select values between 0 and 1)")
+        st.write("#### Sentiment Polarity Probabilities (Select values between 0 and 1)")
         SENTIMENT_POLARITY_LABELS = ["negative", "neutral", "positive"]
 
         model_names1 = list(MODEL_OPTIONS1.keys())
@@ -277,7 +277,7 @@ def show_data_collector():
         sentiment_cols = st.columns(len(SENTIMENT_POLARITY_LABELS))
         for idx, label in enumerate(SENTIMENT_POLARITY_LABELS):
             with sentiment_cols[idx]:
-                st.write(f"**{label.capitalize()}**")
+                st.write(f"##### **{label.capitalize()}**")
                 # Create two subcolumns for "Correct" and "Wrong"
                 subcol_correct, subcol_wrong = st.columns(2)
                 with subcol_correct:
@@ -308,7 +308,7 @@ def show_data_collector():
         # ---------------------------
         # Emotion Feedback
         # ---------------------------
-        st.write("#### Emotion Feedback (Select values between 0 and 1)")
+        st.write("#### Emotion Probabilities (Select values between 0 and 1)")
         EMOTION_MOODTAG_LABELS = [
             "anger", "disgust", "fear", "joy", "neutral",
             "sadness", "surprise"
@@ -331,7 +331,7 @@ def show_data_collector():
             main_cols = st.columns(len(row_labels))
             for idx, label in enumerate(row_labels):
                 with main_cols[idx]:
-                    st.write(f"**{label.capitalize()}**")
+                    st.write(f"##### **{label.capitalize()}**")
                     # Create two subcolumns for correct and wrong values.
                     subcol_correct, subcol_wrong = st.columns(2)
                     with subcol_correct:
@@ -358,7 +358,7 @@ def show_data_collector():
 
 
         # Use form_submit_button instead of st.button inside a form
-        submit_feedback = st.form_submit_button("Submit Feedback")
+        submit_feedback = st.form_submit_button("Submit Data")
 
         if submit_feedback and feedback.strip() and feedback2.strip():
             # Prepare data to insert
@@ -370,7 +370,7 @@ def show_data_collector():
                 "sentiment_feedback": sentiment_feedback,
                 "emotion_feedback": emotion_feedback
             }
-            st.error("Feedback submission is disabled in debug logging mode.")
+            st.error("Submission is disabled in debug logging mode.")
             # try:
             #     from supabase import create_client, Client
             #     from dotenv import load_dotenv

@@ -4,7 +4,9 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), )))
 
 import streamlit as st
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModel, DebertaV2Tokenizer, DebertaV2ForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModel, AutoModelForSeq2SeqLM, DebertaV2Tokenizer, DebertaV2ForSequenceClassification, DebertaV2Model
+from transformers import pipeline
+
 # import torch
 import numpy as np
 import matplotlib.pyplot as plt

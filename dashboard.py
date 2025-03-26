@@ -46,7 +46,7 @@ def free_memory():
 
 def create_sample_example1():
     st.write("""
-        ## Sample Example 1
+        #### Sample Example 1
         """)
     graph = """
     digraph {
@@ -64,7 +64,7 @@ def create_sample_example1():
         Disgust [label="Disgust: 0.015257259", fillcolor="#deffe1", fontcolor="black"];
         Fear [label="Fear: 0.601871967", fillcolor="#deffe1", fontcolor="black"];
         Joy [label="Joy: 0.00410547", fillcolor="#deffe1", fontcolor="black"];
-        NeutralE [label="Neutral: 0.0341026", fillcolor="#deffe1", fontcolor="black"];
+        Neutral [label="Neutral: 0.0341026", fillcolor="#deffe1", fontcolor="black"];
         Sadness [label="Sadness: 0.245294735", fillcolor="#deffe1", fontcolor="black"];
         Surprise [label="Surprise: 0.019189769", fillcolor="#deffe1", fontcolor="black"];
 
@@ -74,13 +74,14 @@ def create_sample_example1():
         // Establish the tree structure
         Input -> Output;
         Input -> Sentiment;
-        Sentiment -> Anger;
-        Sentiment -> Disgust;
-        Sentiment -> Fear;
-        Sentiment -> Joy;
-        Sentiment -> NeutralE;
-        Sentiment -> Sadness;
-        Sentiment -> Surprise;
+        Sentiment -> Emotion
+        Emotion -> Anger;
+        Emotion -> Disgust;
+        Emotion -> Fear;
+        Emotion -> Joy;
+        Emotion -> Neutral;
+        Emotion -> Sadness;
+        Emotion -> Surprise;
     }
     """
     st.graphviz_chart(graph)
@@ -88,7 +89,7 @@ def create_sample_example1():
 
 def create_sample_example2():
     st.write("""
-        ## Sample Example 2
+        #### Sample Example 2
         """)
     graph = """
     digraph {
@@ -98,7 +99,7 @@ def create_sample_example2():
 
         // Define nodes with custom colors
         Input [label="Input:\nu rlly think all that talk means u tough? lol, when I step up, u ain't gon say sh*t", fillcolor="#ffe6de", fontcolor="black"];
-        Output [label="Output:\nyou really think all that talk makes you tough lol when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
+        Output [label="Output:\nyou really think all that talk makes you tough [lol](laughed out loud) when i step up you are not going to say anything", fillcolor="#ffe6de", fontcolor="black"];
         Sentiment [label="Sentiment:\nNEGATIVE", fillcolor="#ecdeff", fontcolor="black"];
 
         // Emotion nodes with a uniform style
@@ -106,7 +107,7 @@ def create_sample_example2():
         Disgust [label="Disgust: 0.039282672", fillcolor="#deffe1", fontcolor="black"];
         Fear [label="Fear: 0.014349542", fillcolor="#deffe1", fontcolor="black"];
         Joy [label="Joy: 0.048965044", fillcolor="#deffe1", fontcolor="black"];
-        NeutralE [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
+        Neutral [label="Neutral: 0.494852662", fillcolor="#deffe1", fontcolor="black"];
         Sadness [label="Sadness: 0.021111647", fillcolor="#deffe1", fontcolor="black"];
         Surprise [label="Surprise: 0.237405464", fillcolor="#deffe1", fontcolor="black"];
 
@@ -116,13 +117,14 @@ def create_sample_example2():
         // Establish the tree structure
         Input -> Output;
         Input -> Sentiment;
-        Sentiment -> Anger;
-        Sentiment -> Disgust;
-        Sentiment -> Fear;
-        Sentiment -> Joy;
-        Sentiment -> NeutralE;
-        Sentiment -> Sadness;
-        Sentiment -> Surprise;
+        Sentiment -> Emotion
+        Emotion -> Anger;
+        Emotion -> Disgust;
+        Emotion -> Fear;
+        Emotion -> Joy;
+        Emotion -> Neutral;
+        Emotion -> Sadness;
+        Emotion -> Surprise;
     }
     """
     st.graphviz_chart(graph)
@@ -147,19 +149,19 @@ def create_footer():
     # 🚀 Contributors Section
     with col1:
         st.markdown("### 🚀 Contributors")
-        st.write("**Archisman Karmakar**")
+        st.write("##### **Archisman Karmakar**")
         st.write("[🔗 LinkedIn](https://www.linkedin.com/in/archismankarmakar/) | [🐙 GitHub](https://www.github.com/ArchismanKarmakar) | [📊 Kaggle](https://www.kaggle.com/archismancoder)")
 
-        st.write("**Sumon Chatterjee**")
+        st.write("##### **Sumon Chatterjee**")
         st.write("[🔗 LinkedIn](https://www.linkedin.com/in/sumon-chatterjee-3b3b43227) | [🐙 GitHub](https://github.com/Sumon670) | [📊 Kaggle](https://www.kaggle.com/sumonchatterjee)")
 
     # 🎓 Mentors Section
     with col2:
         st.markdown("### 🎓 Mentors")
-        st.write("**Prof. Anupam Mondal**")
+        st.write("##### **Prof. Anupam Mondal**")
         st.write("[🔗 LinkedIn](https://www.linkedin.com/in/anupam-mondal-ph-d-8a7a1a39/) | [📚 Google Scholar](https://scholar.google.com/citations?user=ESRR9o4AAAAJ&hl=en) | [🌐 Website](https://sites.google.com/view/anupammondal/home)")
 
-        st.write("**Prof. Sainik Kumar Mahata**")
+        st.write("##### **Prof. Sainik Kumar Mahata**")
         st.write("[🔗 LinkedIn](https://www.linkedin.com/in/mahatasainikk) | [📚 Google Scholar](https://scholar.google.co.in/citations?user=OcJDM50AAAAJ&hl=en) | [🌐 Website](https://sites.google.com/view/sainik-kumar-mahata/home)")
 
     # 📌 Research Project Info Section
@@ -174,21 +176,25 @@ def create_footer():
 def show_dashboard():
     # free_memory()
     st.title("Tachygraphy Micro-text Analysis & Normalization")
-    st.write("""
-        Welcome to the Tachygraphy Micro-text Analysis & Normalization Project. This application is designed to analyze text data through three stages:
-        1. Sentiment Polarity Analysis
-        2. Emotion Mood-tag Analysis
-        3. Text Transformation & Normalization
-    """)
-
-    st.write("""
-             - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
-             - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
-             - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/Tachygraphy-Microtext-Normalization-IEMK25)
-             - Deployment Source: [GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
-             - Streamlit Deployemnt: [Streamlit](https://tachygraphy-microtext.streamlit.app/)
-             - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/Tachygraphy-Microtext-Normalization-IEMK25/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
-             """)
+    st.write(f"""Welcome to the Tachygraphy Micro-text Analysis & Normalization Project. This application is designed to analyze text data through three stages:""")
+    coltl1, coltl2 = st.columns(2)
+    with coltl1:
+        st.write("""
+            1. Sentiment Polarity Analysis
+            2. Emotion Mood-tag Analysis
+            3. Text Transformation & Normalization
+            4. Stacked all 3 stages with their best models
+            5. Data Correction & Collection
+        """)
+    with coltl2:
+        st.write("""
+                - Training Source: [GitHub @ Tachygraphy Micro-text Analysis & Normalization](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization)
+                - Kaggle Collections: [Kaggle @ Tachygraphy Micro-text Analysis & Normalization](https://www.kaggle.com/datasets/archismancoder/dataset-tachygraphy/data?select=Tachygraphy_MicroText-AIO-V3.xlsx)
+                - Hugging Face Org: [Hugging Face @ Tachygraphy Micro-text Analysis & Normalization](https://huggingface.co/Tachygraphy-Microtext-Normalization-IEMK25)
+                - Deployment Source: [GitHub](https://github.com/ArchismanKarmakar/Tachygraphy-Microtext-Analysis-And-Normalization-Deployment-Source-HuggingFace_Streamlit_JPX14032025)
+                - Streamlit Deployemnt: [Streamlit](https://tachygraphy-microtext.streamlit.app/)
+                - Hugging Face Space Deployment: [Hugging Face Space](https://huggingface.co/spaces/Tachygraphy-Microtext-Normalization-IEMK25/Tachygraphy-Microtext-Analysis-and-Normalization-ArchismanCoder)
+                """)
 
     create_footer()
 
@@ -196,7 +202,7 @@ def show_dashboard():
 
     create_sample_example1()
 
-    # create_sample_example2()
+    create_sample_example2()
 
 
 def __main__():

@@ -347,9 +347,9 @@ def get_sentiment_emotion_graph_code(input_text, normalized_text, sentiment_arra
                 penwidth_map[label] = 5
     else:
         # For three distinct probabilities, assign 1 to the smallest, 3 to the middle, 5 to the largest.
-        penwidth_map[sentiment_sorted[0][0]] = 1
-        penwidth_map[sentiment_sorted[1][0]] = 3
-        penwidth_map[sentiment_sorted[2][0]] = 5
+        penwidth_map[sentiment_sorted[0][0]] = 0.2
+        penwidth_map[sentiment_sorted[1][0]] = 0.3
+        penwidth_map[sentiment_sorted[2][0]] = 1
 
     # Build the basic Graphviz structure
     graph_code = f'''
@@ -358,9 +358,9 @@ def get_sentiment_emotion_graph_code(input_text, normalized_text, sentiment_arra
         node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
         
         Input [label="Input Text:\\n{input_text.replace('"', '\\"')}", fillcolor="#ffe6de", fontcolor="#000000"];
-        Normalized [label="Normalized Text:\\n{normalized_text.replace('"', '\\"')}", fillcolor="#ffe6de", fontcolor="#000000"];
-        Sentiment [label="Sentiment"];
-        Emotion [label="Emotion"];
+        Normalized [label="Normalized Text:\\n{normalized_text.replace('"', '\\"')}", fillcolor="#f8ffde", fontcolor="#000000"];
+        Sentiment [label="Sentiment", fillcolor="#ffefde", fontcolor="black"];
+        Emotion [label="Emotion", fillcolor="#ffefde", fontcolor="black"];
         
         Input -> Normalized;
         Input -> Sentiment;
@@ -370,7 +370,7 @@ def get_sentiment_emotion_graph_code(input_text, normalized_text, sentiment_arra
     # Add sentiment nodes (displaying full values without truncation)
     for label, prob in sentiment_pairs:
         node_id = f"S_{label}"
-        graph_code += f'\n    {node_id} [label="{label}: {prob}", fillcolor="#ecdeff", fontcolor="black"];'
+        graph_code += f'\n    {node_id} [label="{label}: {prob}", fillcolor="#f6edfc", fontcolor="black"];'
         graph_code += f'\n    Sentiment -> {node_id};'
     
     # Add emotion nodes (displaying full values)
@@ -378,7 +378,7 @@ def get_sentiment_emotion_graph_code(input_text, normalized_text, sentiment_arra
         if i < len(emotion_flat):
             prob = emotion_flat[i]
             node_id = f"E_{label}"
-            graph_code += f'\n    {node_id} [label="{label}: {prob}", fillcolor="#deffe1", fontcolor="black"];'
+            graph_code += f'\n    {node_id} [label="{label}: {prob}", fillcolor="#edfcef", fontcolor="black"];'
             graph_code += f'\n    Emotion -> {node_id};'
     
     # Add arrows from each sentiment node to the Emotion node with fixed penwidth based on ranking
@@ -605,7 +605,7 @@ def show_stacking_stages():
 
     # Text input with change detection
     user_input = st.text_input(
-        "Enter text for emotions mood-tag analysis:", key="user_input_stage3", on_change=on_text_change
+        "Enter text for all in one inference:", key="user_input_stage3", on_change=on_text_change
     )
 
     if st.session_state.get("last_processed_input", "") != user_input:
