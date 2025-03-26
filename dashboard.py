@@ -160,12 +160,14 @@ def create_sample_example1():
 
         // Define edges
         "Input Text" -> "Normalized Text";
-        "Normalized Text" -> "Sentiment";
+        "Input Text" -> "Sentiment";
         "Sentiment" -> "negative";
         "Sentiment" -> "neutral";
         "Sentiment" -> "positive";
 
-        "Normalized Text" -> "Emotion";
+        "neagtive" -> "Emotion";
+        "positive" -> "Emotion" [penwidth=0.2];
+        "neutral" -> "Emotion" [penwidth=0.2];
         "Emotion" -> "anger";
         "Emotion" -> "disgust";
         "Emotion" -> "fear";
