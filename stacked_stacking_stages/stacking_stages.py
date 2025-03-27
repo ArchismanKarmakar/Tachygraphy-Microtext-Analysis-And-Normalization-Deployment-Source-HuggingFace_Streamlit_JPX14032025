@@ -364,7 +364,7 @@ def get_sentiment_emotion_graph_code(input_text, normalized_text, sentiment_arra
         
         Input -> Normalized;
         Input -> Sentiment;
-        Sentiment -> Emotion;
+        Input -> Emotion;
     '''
     
     # Add sentiment nodes (displaying full values without truncation)
