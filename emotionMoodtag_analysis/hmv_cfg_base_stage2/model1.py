@@ -19,7 +19,7 @@ MODEL_OPTIONS = {
         "name": "DeBERTa v3 Base for Sequence Classification",
         "type": "hf_automodel_finetuned_dbt3",
         "module_path": "hmv_cfg_base_stage2.model1",
-        "hf_location": "tachygraphy-microtext-normalization-iemk/DeBERTa-v3-seqClassfication-LV2-EmotionMoodtags-Batch8",
+        "hf_location": "Tachygraphy-Microtext-Normalization-IEMK25/DeBERTa-v3-seqClassfication-LV2-EmotionMoodtags-Batch8",
         "tokenizer_class": "DebertaV2Tokenizer",
         "model_class": "DebertaV2ForSequenceClassification",
         "problem_type": "regression",

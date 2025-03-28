@@ -27,7 +27,7 @@ MODEL_OPTIONS = {
         "name": "DeBERTa v3 Base Custom Model with minimal Regularized Loss",
         "type": "db3_base_custom",
         "module_path": "hmv_cfg_base_stage1.model2",
-        "hf_location": "tachygraphy-microtext-normalization-iemk/DeBERTa-v3-Base-Cust-LV1-SentimentPolarities-minRegLoss",
+        "hf_location": "Tachygraphy-Microtext-Normalization-IEMK25/DeBERTa-v3-Base-Cust-LV1-SentimentPolarities-minRegLoss",
         "tokenizer_class": "DebertaV2Tokenizer",
         "model_class": "SentimentModel",
         "problem_type": "multi_label_classification",

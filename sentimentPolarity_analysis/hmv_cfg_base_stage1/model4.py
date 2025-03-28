@@ -37,7 +37,7 @@ MODEL_OPTIONS = {
         "name": "LSTM Custom Model",
         "type": "lstm_uncased_custom",
         "module_path": "hmv_cfg_base_stage1.model4",
-        "hf_location": "tachygraphy-microtext-normalization-iemk/LSTM-LV1-SentimentPolarities",
+        "hf_location": "Tachygraphy-Microtext-Normalization-IEMK25/LSTM-LV1-SentimentPolarities",
         "tokenizer_class": "",
         "model_class": "",
         "problem_type": "multi_label_classification",
