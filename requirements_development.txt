@@ -459,7 +459,7 @@ toml==0.10.2
 tomli==2.2.1
 tomlkit==0.13.2
 toolz==1.0.0
-torch==2.4.1
+torch==2.6.0
 torch-directml==0.2.5.dev240914
 torchvision==0.19.1
 tornado==6.4.2
