@@ -8,7 +8,7 @@ sdk_version: 1.44.0
 python_version: "3.12"
 app_file: app_main_hf.py
 pinned: true
-short_description: This project focuses on the Tachygraphy based Microtext Analysis
+short_description: This project focuses on the Tachygraphy Microtext Analysis
 tags:
   - machine-learning
   - deep-learning
