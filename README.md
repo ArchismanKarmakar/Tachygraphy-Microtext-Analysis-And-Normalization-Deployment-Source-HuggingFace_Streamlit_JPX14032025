@@ -1,5 +1,5 @@
 ---
-title: Tachygraphy Microtext Analysis And Normalization
+title: Tachygraphy based Microtext Analysis And Normalization
 emoji: 💻
 colorFrom: red
 colorTo: purple
@@ -8,7 +8,7 @@ sdk_version: 1.44.0
 python_version: "3.12"
 app_file: app_main_hf.py
 pinned: true
-short_description: This project focuses on the Tachygraphy Microtext Analysis
+short_description: This project focuses on the Tachygraphy based Microtext Analysis
 tags:
   - machine-learning
   - deep-learning
@@ -64,7 +64,7 @@ pinned: false
 
 # Tachygraphy based Micro-text Analysis & Normalization
 
-*Welcome to the Tachygraphy Micro-text Analysis & Normalization Project. This page outlines our project’s key stages, sources, sample analysis examples, and team information.*
+*Welcome to the Tachygraphy based Micro-text Analysis & Normalization Project. This page outlines our project’s key stages, sources, sample analysis examples, and team information.*
 
 </div>
 
